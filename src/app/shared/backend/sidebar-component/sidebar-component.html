@@ -1,0 +1,70 @@
+<!-- <div id="sidebar" [ngClass]="{'hide': isSidebarHidden}">
+  <a href="#" class="brand">
+    <i class='bx bxs-smile bx-lg'></i>
+    <span class="text">AdminHub</span>
+  </a>
+  <ul class="side-menu top">
+    <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+      <a href="#" [routerLink]="['/user']">
+        <i class="ti ti-dashboard bx-sm"></i>
+        <span class="text">Dashboard</span>
+      </a>
+    </li>
+    <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+      <a href="#" [routerLink]="['/user/blogs']">
+        <i class="ti ti-blog bx-sm"></i>
+        <span class="text">Blogs</span>
+      </a>
+    </li>
+  </ul>
+  <ul class="side-menu bottom">
+    <li>
+      <a href="#" class="logout">
+        <i class='bx bx-power-off bx-sm bx-burst-hover'></i>
+        <span class="text">Logout</span>
+      </a>
+    </li>
+  </ul>
+</div> -->
+
+ 
+	<section id="sidebar" [ngClass]="{'hide': isSidebarHidden}">
+		<a href="#" class="brand">
+			<i class='bx bxs-smile  bx-lg'></i>
+			<span class="text">AdminHub</span>
+		</a>
+		<ul class="side-menu top">
+			<li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+				<a href="#" [routerLink]="['/user']">
+					<i class='bx bxs-dashboard bx-sm' ></i>
+					<span class="text">Dashboard</span>
+				</a>
+			</li>
+			<li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+				<a href="#" [routerLink]="['/user/blogs']">
+					<i class='bx bxs-doughnut-chart bx-sm' ></i>
+					<span class="text">Blogs</span>
+				</a>
+			</li>
+			<li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+				<a href="#" [routerLink]="['/user/blogs-category']">
+					<i class='bx bxs-message-dots bx-sm' ></i>
+					<span class="text">Blogs Category</span>
+				</a>
+			</li>
+		</ul>
+		<ul class="side-menu bottom">
+			<li>
+				<a href="#">
+					<i class='bx bxs-cog bx-sm bx-spin-hover' ></i>
+					<span class="text">Settings</span>
+				</a>
+			</li>
+			<li>
+				<a href="#" class="logout">
+					<i class='bx bx-power-off bx-sm bx-burst-hover' ></i>
+					<span class="text">Logout</span>
+				</a>
+			</li>
+		</ul>
+	</section>

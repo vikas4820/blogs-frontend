@@ -1,0 +1,45 @@
+<!--
+<div id="preloader">
+  <div class="sk-three-bounce">
+    <div class="sk-child sk-bounce1"></div>
+    <div class="sk-child sk-bounce2"></div>
+    <div class="sk-child sk-bounce3"></div>
+  </div>
+</div> 
+-->
+
+<!-- <div id="main-wrapper">
+    <app-navbar-component></app-navbar-component>
+    <app-sidebar-component></app-sidebar-component>
+    <router-outlet></router-outlet>
+</div> -->
+
+<!-- <div id="main-wrapper" class="dashboard-wrapper">
+  <app-navbar-component 
+    [isSidebarOpen]="isSidebarOpen" 
+    (toggleSidebar)="toggleSidebar()">
+  </app-navbar-component>
+  
+  <app-sidebar-component 
+    [isCollapsed]="isCollapsed" 
+    [isMobileOpen]="isSidebarOpen" 
+    (toggleSidebar)="toggleSidebar()">
+  </app-sidebar-component>
+  
+  <div class="mobile-backdrop" (click)="toggleSidebar()"></div>
+  
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+</div> -->
+
+<div class="admin-wrapper-v2">
+  <app-sidebar-component></app-sidebar-component>
+  <section id="content">
+    <app-navbar-component></app-navbar-component>
+    <router-outlet></router-outlet>
+  </section>
+</div>
+
+
+

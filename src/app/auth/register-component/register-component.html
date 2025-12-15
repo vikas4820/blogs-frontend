@@ -1,0 +1,143 @@
+<div class="authincation h-100">
+  <div class="container-fluid h-100">
+    <div class="row justify-content-center h-100 align-items-center">
+      <div class="col-md-6">
+        <div class="authincation-content">
+          <div class="row no-gutters">
+            <div class="col-xl-12">
+              <div class="auth-form">
+                <h4 class="text-center mb-4">Create Your Account</h4>
+                <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                  <div class="form-group">
+                    <label><strong>Username</strong></label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="username"
+                      [ngClass]="{
+                        'is-invalid':
+                          registerForm.get('username')?.touched &&
+                          registerForm.get('username')?.invalid
+                      }"
+                    />
+                    <div
+                      *ngIf="
+                        registerForm.get('username')?.touched &&
+                        registerForm.get('username')?.invalid
+                      "
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="registerForm.get('username')?.hasError('required')">
+                        Full name is required
+                      </div>
+                      <div *ngIf="registerForm.get('username')?.hasError('minlength')">
+                        Full name must be at least 3 characters long
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label><strong>Email</strong></label>
+                    <input
+                      type="email"
+                      class="form-control"
+                      formControlName="email"
+                      [ngClass]="{
+                        'is-invalid':
+                          registerForm.get('email')?.touched && registerForm.get('email')?.invalid
+                      }"
+                    />
+                    <div
+                      *ngIf="
+                        registerForm.get('email')?.touched && registerForm.get('email')?.invalid
+                      "
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="registerForm.get('email')?.hasError('required')">
+                        Email is required
+                      </div>
+                      <div *ngIf="registerForm.get('email')?.hasError('email')">
+                        Enter a valid email
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label><strong>Password</strong></label>
+                    <input
+                      type="password"
+                      class="form-control"
+                      formControlName="password"
+                      [ngClass]="{
+                        'is-invalid':
+                          registerForm.get('password')?.touched &&
+                          registerForm.get('password')?.invalid
+                      }"
+                    />
+                    <div
+                      *ngIf="
+                        registerForm.get('password')?.touched &&
+                        registerForm.get('password')?.invalid
+                      "
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="registerForm.get('password')?.hasError('required')">
+                        Password is required
+                      </div>
+                      <div *ngIf="registerForm.get('password')?.hasError('minlength')">
+                        Password must be at least 6 characters long
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label><strong>Confirm Password</strong></label>
+                    <input
+                      type="password"
+                      class="form-control"
+                      formControlName="confirmPassword"
+                      [ngClass]="{
+                        'is-invalid':
+                          registerForm.get('confirmPassword')?.touched &&
+                          registerForm.get('confirmPassword')?.invalid
+                      }"
+                    />
+                    <div
+                      *ngIf="
+                        registerForm.get('confirmPassword')?.touched &&
+                        registerForm.get('confirmPassword')?.invalid
+                      "
+                      class="invalid-feedback"
+                    >
+                      <div *ngIf="registerForm.hasError('mismatch')">Passwords do not match</div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="form-check ml-2">
+                      <input class="form-check-input" type="checkbox" id="terms" />
+                      <label class="form-check-label" for="terms"
+                        >I agree to the terms and conditions</label
+                      >
+                    </div>
+                  </div>
+                  <div class="text-center">
+                    <button
+                      type="submit"
+                      class="btn btn-primary btn-block"
+                      [disabled]="registerForm.invalid"
+                    >
+                      Register
+                    </button>
+                  </div>
+                </form>
+                <div class="new-account mt-3">
+                  <p>
+                    Already have an account?
+                    <a class="text-primary" [routerLink]="['/auth/login']">Sign in</a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

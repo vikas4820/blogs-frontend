@@ -1,0 +1,43 @@
+<main>
+
+  <div class="table-data">
+    <div class="order">
+      <div class="head">
+        <h3>Create Blog Category</h3>
+      </div>
+
+      <form [formGroup]="categoryForm" (ngSubmit)="submitForm()" class="category-form">
+        <div class="form-group">
+          <label>Category Name</label>
+          <input type="text" formControlName="categoryName" placeholder="Enter category name" />
+          <small
+            *ngIf="
+              categoryForm.get('categoryName')?.touched && categoryForm.get('categoryName')?.invalid
+            "
+          >
+            Category name is required
+          </small>
+        </div>
+
+        <div class="form-group">
+          <label>Description</label>
+          <textarea
+            rows="4"
+            formControlName="description"
+            placeholder="Enter description"
+          ></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Status</label>
+          <select formControlName="status">
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+        </div>
+
+        <button type="submit" [disabled]="categoryForm.invalid">Create Category</button>
+      </form>
+    </div>
+  </div>
+</main>
