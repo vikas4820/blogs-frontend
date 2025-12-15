@@ -38,7 +38,6 @@
 
 <nav>
     <i class='bx bx-menu bx-sm' (click)="toggleSidebar()"></i>
-    <a href="#" class="nav-link">Categories</a>
     <form (submit)="onSearchSubmit($event)">
         <div class="form-input">
             <input type="search" placeholder="Search..." [(ngModel)]="searchQuery" name="searchQuery">
@@ -68,7 +67,7 @@
     </div>
 
     <!-- Profile Menu -->
-    <a href="#" class="profile" id="profileIcon">
+    <a [routerLink]="['/user/profile']" class="profile" id="profileIcon">
         <img src="https://placehold.co/600x400/png" alt="Profile">
     </a>
     <div class="profile-menu" id="profileMenu">

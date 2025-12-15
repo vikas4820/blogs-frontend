@@ -24,12 +24,27 @@ export class BlogsCategoryComponent {
 
   async ngOnInit() {
     try {
-      const categories = await this.blogsCategoryService.findAll().toPromise();
-      console.log(categories)
-      // this.blogCategories = categories;
+      const categories = await this.blogsCategoryService
+        .findAll()
+        .toPromise();
+
+      this.blogCategories = categories ?? [];
+      console.log(this.blogCategories);
     } catch (error) {
       console.error('Error fetching blog categories:', error);
     }
   }
+
+  deleteCategory(id: number) {
+    if (!confirm('Are you sure you want to delete this category?')) return;
+
+    // this.blogsCategoryService.delete(id).subscribe({
+    //   next: () => {
+    //     this.blogCategories = this.blogCategories.filter(c => c.id !== id);
+    //   },
+    //   error: err => console.error(err),
+    // });
+  }
+
   
 }

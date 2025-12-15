@@ -10,57 +10,46 @@
         <h3 class="mb-0">Blog List</h3>
 
         <div class="d-flex align-items-center gap-2">
-          <button [routerLink]="['/user/blogs-category/create']" class="btn btn-primary"><i class="bx bx-plus"></i> Create Blog Category</button>
+          <button [routerLink]="['/user/blogs-category/create']" class="btn btn-primary">
+            <i class="bx bx-plus"></i> Create Blog Category
+          </button>
         </div>
       </div>
+      <hr />
       <table>
         <thead>
           <tr>
-            <th>User</th>
-            <th>Date Order</th>
+            <th class="data-id">Id</th>
+            <th>Category Name</th>
+            <th>Description</th>
             <th>Status</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
+          <tr *ngFor="let category of blogCategories">
+            <td class="data-id">{{ category.id }}</td>
+            <td>{{ category.categoryName }}</td>
+            <td>{{ category.description }}</td>
             <td>
-              <img src="https://placehold.co/600x400/png" />
-              <p>Micheal John</p>
+              <span class="status" [ngClass]="{ completed: category.status === 'active' }">{{
+                category.status.toUpperCase()
+              }}</span>
             </td>
-            <td>18-10-2021</td>
-            <td><span class="status completed">Completed</span></td>
-          </tr>
-          <tr>
             <td>
-              <img src="https://placehold.co/600x400/png" />
-              <p>Ryan Doe</p>
+              <div class="d-flex gap-2">
+                <button
+                  class="btn btn-sm btn-outline-primary"
+                  [routerLink]="['/user/blogs-category/edit', category.id]"
+                >
+                  <i class="bx bx-edit"></i>
+                </button>
+
+                <button class="btn btn-sm btn-outline-danger" (click)="deleteCategory(category.id)">
+                  <i class="bx bx-trash"></i>
+                </button>
+              </div>
             </td>
-            <td>01-06-2022</td>
-            <td><span class="status pending">Pending</span></td>
-          </tr>
-          <tr>
-            <td>
-              <img src="https://placehold.co/600x400/png" />
-              <p>Tarry White</p>
-            </td>
-            <td>14-10-2021</td>
-            <td><span class="status process">Process</span></td>
-          </tr>
-          <tr>
-            <td>
-              <img src="https://placehold.co/600x400/png" />
-              <p>Selma</p>
-            </td>
-            <td>01-02-2023</td>
-            <td><span class="status pending">Pending</span></td>
-          </tr>
-          <tr>
-            <td>
-              <img src="https://placehold.co/600x400/png" />
-              <p>Andreas Doe</p>
-            </td>
-            <td>31-10-2021</td>
-            <td><span class="status completed">Completed</span></td>
           </tr>
         </tbody>
       </table>

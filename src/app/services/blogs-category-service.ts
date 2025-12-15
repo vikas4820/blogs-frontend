@@ -10,15 +10,14 @@ export class BlogsCategoryService extends ApiService {
   private authUrl = '/blog-category';
 
   constructor(private apiService: ApiService) {
-    super(apiService.http); 
+    super(apiService.http);
   }
 
-  create(formData: any): Observable<HttpResponse<any>> {
+  create(formData: any): Observable<any> {
     return this.apiService.post(`${this.authUrl}`, formData);
   }
 
-  findAll(): Observable<HttpResponse<any>> {
-    return this.apiService.get(`${this.authUrl}`);
+  findAll(): Observable<any[]> {
+    return this.apiService.get<any[]>(this.authUrl);
   }
-
 }
