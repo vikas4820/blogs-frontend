@@ -7,7 +7,8 @@
       </div>
       <hr>
 
-      <form [formGroup]="categoryForm" (ngSubmit)="submitForm()" class="category-form">
+      <!-- <form [formGroup]="categoryForm" (ngSubmit)="submitForm()" class="category-form"> -->
+      <form [formGroup]="categoryForm" (ngSubmit)="submitForm()">
         <div class="form-group">
           <label>Category Name</label>
           <input type="text" formControlName="categoryName" placeholder="Enter category name" />

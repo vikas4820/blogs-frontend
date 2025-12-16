@@ -13,21 +13,21 @@
                     <input
                       type="email"
                       class="form-control"
-                      formControlName="email"
+                      formControlName="usernameOrEmail"
                       [ngClass]="{
                         'is-invalid':
-                          loginForm.get('email')?.touched && loginForm.get('email')?.invalid
+                          loginForm.get('usernameOrEmail')?.touched && loginForm.get('usernameOrEmail')?.invalid
                       }"
                     />
                     <div
-                      *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid"
+                      *ngIf="loginForm.get('usernameOrEmail')?.touched && loginForm.get('usernameOrEmail')?.invalid"
                       class="invalid-feedback"
                     >
-                      <div *ngIf="loginForm.get('email')?.hasError('required')">
-                        Email is required
+                      <div *ngIf="loginForm.get('usernameOrEmail')?.hasError('required')">
+                        usernameOrEmail is required
                       </div>
-                      <div *ngIf="loginForm.get('email')?.hasError('email')">
-                        Enter a valid email
+                      <div *ngIf="loginForm.get('usernameOrEmail')?.hasError('usernameOrEmail')">
+                        Enter a valid usernameOrEmail
                       </div>
                     </div>
                   </div>

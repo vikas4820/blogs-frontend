@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { BlogsCategoryService } from '../../../services/blogs-category-service';
@@ -20,6 +20,7 @@ export class BlogsCategoryComponent {
 
   constructor(
     private blogsCategoryService: BlogsCategoryService,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   async ngOnInit() {
@@ -29,6 +30,7 @@ export class BlogsCategoryComponent {
         .toPromise();
 
       this.blogCategories = categories ?? [];
+      this.cdr.detectChanges();
       console.log(this.blogCategories);
     } catch (error) {
       console.error('Error fetching blog categories:', error);

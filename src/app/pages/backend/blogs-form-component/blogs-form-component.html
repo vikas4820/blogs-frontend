@@ -1,0 +1,128 @@
+<main>
+  <div class="table-data">
+    <div class="order">
+      <div class="head">
+        <h3>Create Blog</h3>
+      </div>
+      <hr />
+
+      <form [formGroup]="blogForm" (ngSubmit)="submitForm()" class="blog-form">
+
+        <!-- Blog Title -->
+        <div class="form-group">
+          <label>Blog Title *</label>
+          <input
+            type="text"
+            formControlName="title"
+            placeholder="Enter blog title"
+          />
+          <small *ngIf="blogForm.get('title')?.touched && blogForm.get('title')?.invalid">
+            <span *ngIf="blogForm.get('title')?.errors?.['required']">
+              Title is required
+            </span>
+            <span *ngIf="blogForm.get('title')?.errors?.['minlength']">
+              Title must be at least 5 characters
+            </span>
+          </small>
+        </div>
+
+        <!-- Slug -->
+        <div class="form-group">
+          <label>Slug *</label>
+          <input
+            type="text"
+            formControlName="slug"
+            placeholder="enter-blog-slug"
+          />
+          <small *ngIf="blogForm.get('slug')?.touched && blogForm.get('slug')?.invalid">
+            Slug is required
+          </small>
+        </div>
+
+        <!-- Category -->
+        <div class="form-group">
+          <label>Category *</label>
+          <select formControlName="categoryId">
+            <option value="">Select category</option>
+            <option *ngFor="let cat of categories" [value]="cat.id">
+              {{ cat.categoryName }}
+            </option>
+          </select>
+          <small *ngIf="blogForm.get('categoryId')?.touched && blogForm.get('categoryId')?.invalid">
+            Category is required
+          </small>
+        </div>
+
+        <!-- Short Description -->
+        <div class="form-group">
+          <label>Short Description *</label>
+          <textarea
+            rows="3"
+            formControlName="shortDescription"
+            placeholder="Short summary of blog"
+          ></textarea>
+          <small *ngIf="blogForm.get('shortDescription')?.touched && blogForm.get('shortDescription')?.invalid">
+            Short description is required
+          </small>
+        </div>
+
+        <!-- Blog Content -->
+        <div class="form-group">
+          <label>Blog Content *</label>
+          <textarea
+            rows="6"
+            formControlName="content"
+            placeholder="Write full blog content"
+          ></textarea>
+          <small *ngIf="blogForm.get('content')?.touched && blogForm.get('content')?.invalid">
+            Content is required
+          </small>
+        </div>
+
+        <!-- Featured Image -->
+        <div class="form-group">
+          <label>Featured Image *</label>
+          <input type="file" (change)="onFileChange($event)" />
+          <small *ngIf="imageError">
+            Featured image is required
+          </small>
+        </div>
+
+        <!-- SEO Meta Title -->
+        <div class="form-group">
+          <label>Meta Title</label>
+          <input
+            type="text"
+            formControlName="metaTitle"
+            placeholder="SEO meta title"
+          />
+        </div>
+
+        <!-- SEO Meta Description -->
+        <div class="form-group">
+          <label>Meta Description</label>
+          <textarea
+            rows="2"
+            formControlName="metaDescription"
+            placeholder="SEO meta description"
+          ></textarea>
+        </div>
+
+        <!-- Status -->
+        <div class="form-group">
+          <label>Status *</label>
+          <select formControlName="status">
+            <option value="active">Active</option>
+            <option value="draft">Draft</option>
+          </select>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" [disabled]="blogForm.invalid || imageError">
+          Create Blog
+        </button>
+
+      </form>
+    </div>
+  </div>
+</main>

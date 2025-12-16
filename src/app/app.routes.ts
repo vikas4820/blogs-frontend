@@ -16,6 +16,9 @@ import { RessetPasswordComponent } from './auth/resset-password-component/resset
 import { BlogsComponent } from './pages/backend/blogs-component/blogs-component';
 import { BlogsCategoryComponent } from './pages/backend/blogs-category-component/blogs-category-component';
 import { BlogsCategoryFormComponent } from './pages/backend/blogs-category-form-component/blogs-category-form-component';
+import { BlogsFormComponent } from './pages/backend/blogs-form-component/blogs-form-component';
+import { authGuard } from './guards/auth-guard';
+import { rolesGuard } from './guards/roles-guard';
 
 export const routes: Routes = [
 
@@ -36,8 +39,13 @@ export const routes: Routes = [
     {
         path: 'user',
         component: BackendComponent,
+        canActivate: [authGuard],
+        data: { roles: ['admin'] },
         children: [
             { path: '', component: DashboardComponent },
+            { path: 'blogs', component: BlogsComponent },
+            { path: 'blogs/create', component: BlogsFormComponent },
+            { path: 'blogs/edit/:id', component: BlogsFormComponent },
             { path: 'blogs', component: BlogsComponent },
             { path: 'blogs-category', component: BlogsCategoryComponent },
             { path: 'blogs-category/create', component: BlogsCategoryFormComponent },
