@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BlogsCategoryService } from '../../../services/blogs-category-service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-blogs-category-form-component',
@@ -15,12 +16,38 @@ import { BlogsCategoryService } from '../../../services/blogs-category-service';
 export class BlogsCategoryFormComponent {
 
   categoryForm!: FormGroup;
+  categoryId!: string|null;
+  category!: any;
 
   constructor(
     private fb: FormBuilder,
     private blogsCategoryService: BlogsCategoryService,
+    private route: ActivatedRoute,
   ) {
     this.manageCategoryForm();
+  }
+
+  async ngOnInit() {
+    try {
+      const categoryId = this.route.snapshot.paramMap.get('id');
+      this.categoryId = categoryId;
+
+      if(this.categoryId) {
+        this.category = await this.blogsCategoryService.getOne(this.categoryId).toPromise();
+        this.patch();
+      }
+
+    } catch (error) {
+      
+    }
+  }
+
+  patch() {
+    this.categoryForm.patchValue({
+      categoryName: this.category.categoryName,
+      description: this.category.description,
+      status: this.category.status || 'active', 
+    });
   }
 
   manageCategoryForm() {
@@ -34,8 +61,17 @@ export class BlogsCategoryFormComponent {
   async submitForm() {
     if (this.categoryForm.valid) {
       console.log(this.categoryForm.value);
-      const promise = await this.blogsCategoryService.create(this.categoryForm.value).toPromise();
-      console.log("promise", promise);
+      let result;
+      if(this.categoryId && this.category) {
+        result = await this.blogsCategoryService.update(this.categoryId, this.categoryForm.value).toPromise();
+      } else {
+        result = await this.blogsCategoryService.create(this.categoryForm.value).toPromise();
+      }
+
+      if(result.id) {
+        this.category = result;
+        this.patch();
+      }
     }
   }
 }

@@ -52,16 +52,24 @@
 					<span class="text">Blogs Category</span>
 				</a>
 			</li>
+			<li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+				<a href="#" [routerLink]="['/user/all-users']">
+					<i class='bx bxs-group bx-sm' ></i>
+					<span class="text">Users</span>
+				</a>
+			</li>
 		</ul>
 		<ul class="side-menu bottom">
 			<li>
-				<a href="#">
-					<i class='bx bxs-cog bx-sm bx-spin-hover' ></i>
-					<span class="text">Settings</span>
-				</a>
+				
+			<a [routerLink]="['/user/profile']">
+				<i class='bx bxs-cog bx-sm bx-spin-hover' ></i>
+				<span class="text">Profile</span>
+			</a> 
+				
 			</li>
 			<li>
-				<a href="#" class="logout">
+				<a (click)="logOut()" class="logout">
 					<i class='bx bx-power-off bx-sm bx-burst-hover' ></i>
 					<span class="text">Logout</span>
 				</a>

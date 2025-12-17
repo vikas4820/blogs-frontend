@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { BlogsCategoryService } from './blogs-category-service';
+import { GlobalScript } from './global-script';
 
-describe('BlogsCategoryService', () => {
-  let service: BlogsCategoryService;
+describe('GlobalScript', () => {
+  let service: GlobalScript;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(BlogsCategoryService);
+    service = TestBed.inject(GlobalScript);
   });
 
   it('should be created', () => {

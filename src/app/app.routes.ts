@@ -18,7 +18,9 @@ import { BlogsCategoryComponent } from './pages/backend/blogs-category-component
 import { BlogsCategoryFormComponent } from './pages/backend/blogs-category-form-component/blogs-category-form-component';
 import { BlogsFormComponent } from './pages/backend/blogs-form-component/blogs-form-component';
 import { authGuard } from './guards/auth-guard';
-import { rolesGuard } from './guards/roles-guard';
+import { UsersComponent } from './pages/backend/users-component/users-component';
+import { UsersFormComponent } from './pages/backend/users-form-component/users-form-component';
+import { UserProfileComponent } from './pages/backend/user-profile-component/user-profile-component';
 
 export const routes: Routes = [
 
@@ -28,7 +30,7 @@ export const routes: Routes = [
         children: [
             { path: '', component: HomeComponent }, 
             { path: 'blog/:slug/:id', component: BlogComponent }, 
-            { path: 'author', component: AuthorComponent }, 
+            { path: 'author', component: AuthorComponent, canActivate: [authGuard] }, 
             { path: 'contact-us', component: ContactUsComponent }, 
             { path: 'about-us', component: AboutUsComponent }, 
             { path: 'privacy-policy', component: PrivacyPolicyComponent }, 
@@ -46,10 +48,12 @@ export const routes: Routes = [
             { path: 'blogs', component: BlogsComponent },
             { path: 'blogs/create', component: BlogsFormComponent },
             { path: 'blogs/edit/:id', component: BlogsFormComponent },
-            { path: 'blogs', component: BlogsComponent },
             { path: 'blogs-category', component: BlogsCategoryComponent },
             { path: 'blogs-category/create', component: BlogsCategoryFormComponent },
             { path: 'blogs-category/edit/:id', component: BlogsCategoryFormComponent },
+            { path: 'all-users', component: UsersComponent },
+            { path: 'all-users/edit/:id', component: UsersFormComponent },
+            { path: 'profile', component: UserProfileComponent },
         ]
     },
 

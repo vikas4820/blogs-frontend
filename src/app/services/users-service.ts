@@ -1,27 +1,27 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api-service';
-import { Observable } from 'rxjs/internal/Observable';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class BlogsService extends ApiService {
-  private blogUrl = '/blog';
+export class UsersService extends ApiService {
+  private userUrl = '/user';
 
   constructor(private apiService: ApiService) {
     super(apiService.http); 
   }
 
+  
   findAll(): Observable<any[]> {
-    return this.apiService.get<any[]>(this.blogUrl);
+    return this.apiService.get<any[]>(this.userUrl);
   }
 
   getCount(): Observable<{ all: number, active: number, inactive: number }> {
-    return this.apiService.get<{ all: number, active: number, inactive: number }>(`${this.blogUrl}/count`);
+    return this.apiService.get<{ all: number, active: number, inactive: number }>(`${this.userUrl}/count`);
   }
 
   create(formData: any): Observable<any> {
-    return this.apiService.post(`${this.blogUrl}`, formData);
+    return this.apiService.post(`${this.userUrl}`, formData);
   }
-  
 }

@@ -44,7 +44,7 @@ export class LoginComponent {
         console.log(response)
         if(response && response.access_token) {
           localStorage.setItem('access_token', response.access_token);
-          const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/user';
+          const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/author';
           this.router.navigateByUrl(returnUrl);
           console.log("response", response);
         }

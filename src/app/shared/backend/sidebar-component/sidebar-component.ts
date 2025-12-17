@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { SharedService } from '../../../services/shared-service';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { AuthService } from '../../../services/auth-service';
 
 @Component({
   selector: 'app-sidebar-component',
@@ -17,7 +18,11 @@ export class SidebarComponent {
 
   isSidebarHidden = false;
 
-  constructor(private sharedService: SharedService) {}
+  constructor(
+    private sharedService: SharedService,
+    private authService: AuthService,
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
     this.sharedService.sidebarVisibility$.subscribe((visible) => {
@@ -27,5 +32,11 @@ export class SidebarComponent {
 
   toggleSidebar() {
     this.sharedService.toggleSidebar();
+  }
+
+  logOut() {
+    if(!confirm('Are your sure? You have been logged out!')) return;
+    this.authService.logout();
+    this.router.navigate(['/']);
   }
 }

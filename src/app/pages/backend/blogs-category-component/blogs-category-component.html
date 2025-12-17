@@ -32,7 +32,7 @@
             <td>{{ category.categoryName }}</td>
             <td>{{ category.description }}</td>
             <td>
-              <span class="status" [ngClass]="{ completed: category.status === 'active' }">{{
+              <span class="status" [ngClass]="category.status">{{
                 category.status.toUpperCase()
               }}</span>
             </td>

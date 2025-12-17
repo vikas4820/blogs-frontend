@@ -63,6 +63,11 @@ export class AuthService extends ApiService {
   logout(): void {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
+    localStorage.removeItem('user_data');
+  }
+
+  setUserData(userData: any): void {
+    localStorage.setItem('user_data', JSON.stringify(userData));  
   }
 
 }

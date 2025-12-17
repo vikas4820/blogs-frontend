@@ -92,9 +92,17 @@
             </button>
           </div>
         </div>
-        <div class="search px-4">
-          <button [routerLink]="['/author']" id="searchOpen" class="search-btn"><i class="ti-user"></i></button>
-        </div>
+        <ng-container *ngIf="isLoggedIn; else loggedOut">
+          <div class="search px-4">
+            <button [routerLink]="['/author']" id="searchOpen" class="search-btn"><i class="ti-user"></i></button>
+          </div>
+        </ng-container>
+
+        <ng-template #loggedOut>
+          <a routerLink="/auth/login" class="btn btn-outline-primary me-3 mx-1">Login</a>
+          <a routerLink="/auth/signup" class="btn btn-primary">Sign Up</a>
+        </ng-template>
+        
       </div>
     </nav>
   </div>
