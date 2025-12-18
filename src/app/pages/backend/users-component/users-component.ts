@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { UsersService } from './../../../services/users-service';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { LoaderService } from '../../../services/loader-service';
 
 @Component({
   selector: 'app-users-component',
@@ -18,14 +19,18 @@ export class UsersComponent {
   constructor(
     private cdr: ChangeDetectorRef,
     private usersService: UsersService,
+    private loader: LoaderService,
   ) {}
 
   async ngOnInit() {
     try {
+      this.loader.show();
       await this.loadUsers();
       this.cdr.detectChanges();
     } catch (error) {
       
+    } finally {
+      this.loader.hide();
     }
   }
 

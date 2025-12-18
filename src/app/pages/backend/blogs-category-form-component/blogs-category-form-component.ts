@@ -3,6 +3,7 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BlogsCategoryService } from '../../../services/blogs-category-service';
 import { ActivatedRoute } from '@angular/router';
+import { LoaderService } from '../../../services/loader-service';
 
 @Component({
   selector: 'app-blogs-category-form-component',
@@ -23,12 +24,14 @@ export class BlogsCategoryFormComponent {
     private fb: FormBuilder,
     private blogsCategoryService: BlogsCategoryService,
     private route: ActivatedRoute,
+    private loader: LoaderService
   ) {
     this.manageCategoryForm();
   }
 
   async ngOnInit() {
     try {
+      this.loader.show();
       const categoryId = this.route.snapshot.paramMap.get('id');
       this.categoryId = categoryId;
 
@@ -39,6 +42,8 @@ export class BlogsCategoryFormComponent {
 
     } catch (error) {
       
+    } finally {
+      this.loader.hide();
     }
   }
 

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { LoaderService } from '../../../services/loader-service';
 
 @Component({
   selector: 'app-user-profile-component',
@@ -8,4 +9,7 @@ import { Component } from '@angular/core';
 })
 export class UserProfileComponent {
 
+  constructor(
+    private loader: LoaderService
+  ) {}
 }

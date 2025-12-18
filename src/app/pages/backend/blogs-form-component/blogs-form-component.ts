@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BlogsCategoryService } from '../../../services/blogs-category-service';
+import { LoaderService } from '../../../services/loader-service';
 
 @Component({
   selector: 'app-blogs-form-component',
@@ -21,6 +22,7 @@ export class BlogsFormComponent {
   constructor(
     private fb: FormBuilder,
     private blogsCategoryService: BlogsCategoryService,
+    private loader: LoaderService,
   ) {
     this.manageBlogForm();
   }
@@ -40,9 +42,12 @@ export class BlogsFormComponent {
 
   async ngOnInit() {
     try {
+      this.loader.show();
       await this.fetchCategories();
     } catch (error) {
       
+    } finally {
+      this.loader.hide();
     }
   }
 

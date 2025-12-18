@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { LoaderService } from '../../../services/loader-service';
 
 @Component({
   selector: 'app-users-form-component',
@@ -7,5 +8,9 @@ import { Component } from '@angular/core';
   styleUrl: './users-form-component.scss',
 })
 export class UsersFormComponent {
+
+  constructor(
+    private loader: LoaderService
+  ) {}
 
 }

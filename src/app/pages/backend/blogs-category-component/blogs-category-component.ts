@@ -3,6 +3,7 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { BlogsCategoryService } from '../../../services/blogs-category-service';
+import { LoaderService } from '../../../services/loader-service';
 
 @Component({
   selector: 'app-blogs-category-component',
@@ -21,15 +22,19 @@ export class BlogsCategoryComponent {
   constructor(
     private blogsCategoryService: BlogsCategoryService,
     private cdr: ChangeDetectorRef,
+    private loader: LoaderService,
   ) {}
 
   async ngOnInit() {
     try {
+      this.loader.show();
       await this.loadCategories();
       this.cdr.detectChanges();
       console.log(this.blogCategories);
     } catch (error) {
       console.error('Error fetching blog categories:', error);
+    } finally {
+      this.loader.hide();
     }
   }
 
