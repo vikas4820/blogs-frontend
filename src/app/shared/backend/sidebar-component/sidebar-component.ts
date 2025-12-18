@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Signal } from '@angular/core';
 import { SharedService } from '../../../services/shared-service';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../../services/auth-service';
+import { TokenPayload, UserState } from '../../../states/user-state.service';
 
 @Component({
   selector: 'app-sidebar-component',
@@ -17,12 +18,16 @@ import { AuthService } from '../../../services/auth-service';
 export class SidebarComponent {
 
   isSidebarHidden = false;
+  user!: Signal<TokenPayload | null>;
+  roleName!: Signal<string | null>;
+  isAdmin!: Signal<boolean>;
 
   constructor(
     private sharedService: SharedService,
     private authService: AuthService,
     private router: Router,
-  ) {}
+    public userState: UserState,
+  ) { }
 
   ngOnInit(): void {
     this.sharedService.sidebarVisibility$.subscribe((visible) => {

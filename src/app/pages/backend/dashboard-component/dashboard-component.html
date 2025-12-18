@@ -13,14 +13,14 @@
         <p>Blogs</p>
       </span>
     </li>
-    <li [routerLink]="['/user/all-users']" style="cursor: pointer;">
+    <li [routerLink]="['/user/all-users']" style="cursor: pointer;" *ngIf="userState.isAdmin()">
       <i class="bx bxs-group"></i>
       <span class="text">
         <h3>{{ usersCount }}</h3>
         <p>Users</p>
       </span>
     </li>
-    <li [routerLink]="['/user/blogs-category']" style="cursor: pointer;">
+    <li [routerLink]="['/user/blogs-category']" style="cursor: pointer;" *ngIf="userState.isAdmin()">
       <i class="bx bxs-folder-open"></i>
       <span class="text">
         <h3>{{ blogsCategoryCount }}</h3>

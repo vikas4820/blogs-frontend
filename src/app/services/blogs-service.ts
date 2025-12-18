@@ -20,6 +20,10 @@ export class BlogsService extends ApiService {
     return this.apiService.get<{ all: number, active: number, inactive: number }>(`${this.blogUrl}/count`);
   }
 
+  getOne(id: string): Observable<any> {
+    return this.apiService.get(`${this.blogUrl}/${id}`);
+  }
+
   create(formData: any): Observable<any> {
     return this.apiService.post(`${this.blogUrl}`, formData);
   }

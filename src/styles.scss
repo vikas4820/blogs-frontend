@@ -30,6 +30,8 @@ li {
   --orange: #fd7238;
   --light-orange: #ffe0d3;
   --green: green;
+  --persianOrange: #ce8460;
+  --light-persianOrange: #ffe0d3;
 }
 
 html {
@@ -73,7 +75,7 @@ body {
   height: 56px;
   display: flex;
   align-items: center;
-  color: var(--blue);
+  color: var(--persianOrange);
   position: sticky;
   top: 0;
   left: 0;
@@ -137,7 +139,7 @@ body {
   overflow-x: hidden;
 }
 #sidebar .side-menu.top li.active a {
-  color: var(--blue);
+  color: var(--persianOrange);
 }
 #sidebar.hide .side-menu li a {
   width: calc(48px - (4px * 2));
@@ -147,7 +149,7 @@ body {
   color: var(--red);
 }
 #sidebar .side-menu.top li a:hover {
-  color: var(--blue);
+  color: var(--persianOrange);
 }
 #sidebar .side-menu li a .bx {
   min-width: calc(60px - ((4px + 6px) * 2));
@@ -218,7 +220,7 @@ body {
   transition: 0.3s ease;
 }
 #content nav .nav-link:hover {
-  color: var(--blue);
+  color: var(--persianOrange);
 }
 #content nav form {
   max-width: 400px;
@@ -247,7 +249,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: var(--blue);
+  background: var(--persianOrange);
   color: var(--light);
   font-size: 18px;
   border: none;
@@ -304,7 +306,7 @@ body {
 }
 
 #content nav .notification-menu li:hover {
-  background-color: var(--light-blue);
+  background-color: var(--light-persianOrange);
   color: var(--dark);
 }
 #content nav .notification-menu li:hover a {
@@ -312,7 +314,7 @@ body {
   color: var(--light);
 }
 body.dark #content nav .notification-menu li:hover {
-  background-color: var(--light-blue);
+  background-color: var(--light-persianOrange);
   color: var(--light);
 }
 body.dark #content nav .notification-menu li a {
@@ -350,7 +352,7 @@ body.dark #content nav .notification-menu li a {
 }
 
 #content nav .profile-menu li:hover {
-  background-color: var(--light-blue);
+  background-color: var(--light-persianOrange);
   color: var(--dark);
 }
 #content nav .profile-menu li a {
@@ -388,7 +390,7 @@ body.dark #content nav .profile-menu li a {
   left: 2px;
   bottom: 2px;
   width: calc(25px - 4px);
-  background: var(--blue);
+  background: var(--persianOrange);
   border-radius: 50%;
   transition: all 0.3s ease;
 }
@@ -411,7 +413,7 @@ body.dark #content nav .profile-menu li a {
 }
 
 #content nav .swith-lm .ball {
-  background-color: var(--blue);
+  background-color: var(--persianOrange);
   border-radius: 50%;
   position: absolute;
   top: 2px;
@@ -470,14 +472,14 @@ body.dark #content nav .profile-menu li a {
   pointer-events: none;
 }
 #content main .head-title .left .breadcrumb li a.active {
-  color: var(--blue);
+  color: var(--persianOrange);
   pointer-events: unset;
 }
 #content main .head-title .btn-download {
   height: 36px;
   padding: 0 16px;
   border-radius: 36px;
-  background: var(--blue);
+  background: var(--persianOrange);
   color: var(--light);
   display: flex;
   justify-content: center;
@@ -510,8 +512,8 @@ body.dark #content nav .profile-menu li a {
   align-items: center;
 }
 #content main .box-info li:nth-child(1) .bx {
-  background: var(--light-blue);
-  color: var(--blue);
+  background: var(--light-persianOrange);
+  color: var(--persianOrange);
 }
 #content main .box-info li:nth-child(2) .bx {
   background: var(--light-yellow);
@@ -632,7 +634,7 @@ body.dark #content nav .profile-menu li a {
   cursor: pointer;
 }
 #content main .table-data .todo .todo-list li.completed {
-  border-left: 10px solid var(--blue);
+  border-left: 10px solid var(--persianOrange);
 }
 #content main .table-data .todo .todo-list li.not-completed {
   border-left: 10px solid var(--orange);
@@ -812,9 +814,9 @@ body.dark #content nav .profile-menu li a {
   justify-content: center !important;
 }
 
-.h-100 {
-  min-height: 100vh;
-}
+// .h-100 {
+//   min-height: 100vh;
+// }
 
 .align-items-center {
   align-items: center !important;

@@ -4,11 +4,14 @@ import { UsersService } from '../../../services/users-service';
 import { BlogsService } from './../../../services/blogs-service';
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { LoaderService } from '../../../services/loader-service';
+import { UserState } from '../../../states/user-state.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard-component',
   imports: [
     RouterLink,
+    CommonModule,
   ],
   templateUrl: './dashboard-component.html',
   styleUrl: './dashboard-component.scss',
@@ -24,7 +27,8 @@ export class DashboardComponent {
     private blogsService: BlogsService,
     private usersService: UsersService,
     private blogsCategoryService: BlogsCategoryService,
-    private loader: LoaderService
+    private loader: LoaderService,
+    public userState: UserState,
   ) {}
 
   async ngOnInit() {

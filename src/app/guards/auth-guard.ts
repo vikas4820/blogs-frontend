@@ -23,5 +23,14 @@ export const authGuard: CanActivateFn = (route, state) => {
     return false;
   }
 
+  const decoded: any = jwtHelper.decodeToken(token);
+  const userRole = decoded?.role?.name;
+
+  const allowedRoles: string[] = route.data['roles'] ?? [];
+  if (allowedRoles.length && !allowedRoles.includes(userRole)) {
+    router.navigate(['/unauthorized']); 
+    return false;
+  }
+
   return true;
 };

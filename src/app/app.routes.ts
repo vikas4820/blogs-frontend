@@ -21,6 +21,8 @@ import { authGuard } from './guards/auth-guard';
 import { UsersComponent } from './pages/backend/users-component/users-component';
 import { UsersFormComponent } from './pages/backend/users-form-component/users-form-component';
 import { UserProfileComponent } from './pages/backend/user-profile-component/user-profile-component';
+import { UnauthorizedComponent } from './shared/unauthorized-component/unauthorized-component';
+import { NotFoundComponent } from './shared/not-found-component/not-found-component';
 
 export const routes: Routes = [
 
@@ -41,19 +43,17 @@ export const routes: Routes = [
     {
         path: 'user',
         component: BackendComponent,
-        canActivate: [authGuard],
-        data: { roles: ['admin'] },
         children: [
-            { path: '', component: DashboardComponent },
-            { path: 'blogs', component: BlogsComponent },
-            { path: 'blogs/create', component: BlogsFormComponent },
-            { path: 'blogs/edit/:id', component: BlogsFormComponent },
-            { path: 'blogs-category', component: BlogsCategoryComponent },
-            { path: 'blogs-category/create', component: BlogsCategoryFormComponent },
-            { path: 'blogs-category/edit/:id', component: BlogsCategoryFormComponent },
-            { path: 'all-users', component: UsersComponent },
-            { path: 'all-users/edit/:id', component: UsersFormComponent },
-            { path: 'profile', component: UserProfileComponent },
+            { path: '', component: DashboardComponent, canActivate: [authGuard], data: { roles: ['admin', 'user'] } },
+            { path: 'blogs', component: BlogsComponent, canActivate: [authGuard], data: { roles: ['admin', 'user'] } },
+            { path: 'blogs/create', component: BlogsFormComponent, canActivate: [authGuard], data: { roles: ['admin', , 'user'] } },
+            { path: 'blogs/edit/:id', component: BlogsFormComponent, canActivate: [authGuard], data: { roles: ['admin', 'user'] } },
+            { path: 'blogs-category', component: BlogsCategoryComponent, canActivate: [authGuard], data: { roles: ['admin'] } },
+            { path: 'blogs-category/create', component: BlogsCategoryFormComponent, canActivate: [authGuard], data: { roles: ['admin'] } },
+            { path: 'blogs-category/edit/:id', component: BlogsCategoryFormComponent, canActivate: [authGuard], data: { roles: ['admin'] } },
+            { path: 'all-users', component: UsersComponent, canActivate: [authGuard], data: { roles: ['admin'] } },
+            { path: 'all-users/edit/:id', component: UsersFormComponent, canActivate: [authGuard], data: { roles: ['admin'] } },
+            { path: 'profile', component: UserProfileComponent, canActivate: [authGuard], data: { roles: ['admin', 'user'] } },
         ]
     },
 
@@ -67,6 +67,7 @@ export const routes: Routes = [
         ]
     }, 
     
-    { path: '**', redirectTo: '' } 
+    { path: 'unauthorized', component: UnauthorizedComponent },
+    { path: '**', component: NotFoundComponent } 
     
 ];

@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth-service';
+import { UserState } from '../../states/user-state.service';
 
 @Component({
   selector: 'app-login-component',
@@ -22,6 +23,7 @@ export class LoginComponent {
     private authService: AuthService,
     private route: ActivatedRoute,
     private router: Router,
+    private userState: UserState,
   ) {}
 
   ngOnInit() {
@@ -44,6 +46,7 @@ export class LoginComponent {
         console.log(response)
         if(response && response.access_token) {
           localStorage.setItem('access_token', response.access_token);
+          this.authService.initializeFromToken();
           const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/author';
           this.router.navigateByUrl(returnUrl);
           console.log("response", response);

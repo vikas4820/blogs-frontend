@@ -3,6 +3,7 @@ import { ApiService } from './api-service';
 import { Observable } from 'rxjs';
 import { HttpResponse } from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { TokenPayload, UserState } from '../states/user-state.service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,8 +14,16 @@ export class AuthService extends ApiService {
 
   constructor(
     private apiService: ApiService,
+    private userState: UserState,
   ) {
     super(apiService.http); 
+  }
+
+  initializeFromToken() {
+    const token = localStorage.getItem('access_token');
+    if (!token) return;
+    const decoded = this.getDecodedInfo();
+    this.userState.setFromToken(decoded);
   }
 
   register(userData: any): Observable<any> {
@@ -50,6 +59,13 @@ export class AuthService extends ApiService {
 
     const decoded = this.decodeToken(token);
     return decoded?.role ?? null;
+  }
+
+  getDecodedInfo() {
+    const token = this.getToken();
+    if(token) {
+      return this.decodeToken(token);
+    }
   }
 
   decodeToken(token: string) {

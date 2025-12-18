@@ -1,0 +1,63 @@
+.error-container {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, #ce8460 0%, #d9926a 50%, #e5a880 100%);
+  font-family: 'Segoe UI', sans-serif; color: white;
+}
+
+.error-content {
+  text-align: center;
+}
+
+.lock-icon {
+  font-size: 8rem; margin-bottom: 20px; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+  animation: bounce 2s infinite;
+}
+
+.error-code { 
+  font-size: 6rem; font-weight: 300; margin: 0 0 10px; 
+}
+
+h2 {
+  font-size: 2rem; margin: 0 0 1rem; opacity: 0.95;
+}
+
+p {
+  font-size: 1.1rem; line-height: 1.6; margin: 0 0 30px; opacity: 0.9; color: white !important;
+}
+
+.action-buttons { 
+  margin-top: 30px; 
+}
+
+.btn-primary, .btn-secondary {
+  display: inline-block; padding: 12px 30px; margin: 0 10px;
+  text-decoration: none; border-radius: 50px; transition: all 0.3s ease;
+  box-shadow: 0 8px 32px rgba(206, 132, 96, 0.4); backdrop-filter: blur(10px);
+}
+
+.btn-primary { 
+  background: rgba(255,255,255,0.25); color: white; 
+}
+.btn-primary:hover { 
+  background: rgba(255,255,255,0.35); transform: scale(1.05); 
+}
+
+.btn-secondary { 
+  background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.95); 
+  border: 2px solid rgba(255,255,255,0.4); 
+}
+.btn-secondary:hover { 
+  background: rgba(255,255,255,0.25); 
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-10px); }
+  60% { transform: translateY(-5px); }
+}
+
+@media (max-width: 768px) {
+  .action-buttons { flex-direction: column; gap: 1rem; }
+  .btn-primary, .btn-secondary { display: block; margin: 0.5rem auto; width: 100%; max-width: 250px; }
+}
