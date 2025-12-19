@@ -31,8 +31,13 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
-            ]
+              "src/styles.scss",
+              "public/plugins/bootstrap/bootstrap.min.css",
+              "public/plugins/slick/slick.css",
+              "public/plugins/themify-icons/themify-icons.css",
+              "public/css/style.css"
+            ],
+            "scripts": []
           },
           "configurations": {
             "production": {

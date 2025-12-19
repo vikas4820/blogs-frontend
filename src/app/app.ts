@@ -15,6 +15,7 @@ export class App {
 
   constructor(
     private authService: AuthService,
+    private GlobalScript: GlobalScript
   ) {
     this.authService.initializeFromToken();
   }
