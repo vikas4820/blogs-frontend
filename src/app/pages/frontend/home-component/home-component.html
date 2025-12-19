@@ -87,7 +87,7 @@
             <a [routerLink]="['blog', 'test-blog', 123]" class="btn btn-outline-primary">Continue Reading</a>
           </div>
         </article>
-        <article class="row mb-5">
+        <article class="row mb-5" *ngFor="let blog of blogs">
           <div class="col-12">
             <div class="post-slider">
               <img loading="lazy" src="images/post/post-1.jpg" class="img-fluid" alt="post-thumb" />
@@ -96,31 +96,28 @@
           <div class="col-lg-10 mx-auto">
             <h3>
               <a class="post-title" href="post-details-1.html"
-                >Cheerful Loving Couple Bakers Drinking Coffee</a
+                >{{ blog.title }}</a
               >
             </h3>
             <ul class="list-inline post-meta mb-4">
               <li class="list-inline-item">
-                <i class="ti-user mr-2"></i><a href="author.html">John Doe</a>
+                <i class="ti-user mr-2"></i><a href="author.html">{{ blog.user?.username?.toUpperCase() }}</a>
               </li>
-              <li class="list-inline-item">Date : March 14, 2020</li>
+              <li class="list-inline-item">Date : {{ blog.createdAt | date:'MMMM d, y' }}</li>
               <li class="list-inline-item">
-                Categories : <a href="#!" class="ml-1">Photography </a>
+                Categories : <a href="#!" class="ml-1">{{ blog.blogCategory?.categoryName }}</a>
               </li>
               <li class="list-inline-item">
                 Tags : <a href="#!" class="ml-1">Photo </a> ,<a href="#!" class="ml-1">Image </a>
               </li>
             </ul>
             <p>
-              It’s no secret that the digital industry is booming. From exciting startups to global
-              brands, companies are reaching out to digital agencies, responding to the new
-              possibilities available. However, the industry is fast becoming overcrowded, heaving
-              with agencies offering similar services — on the surface, at least. Producing
-              creative, fresh projects is the key to standing out.
+              {{ blog.shortDescription }}
             </p>
-            <a [routerLink]="['blog', 'test-blog', 123]" class="btn btn-outline-primary">Continue Reading</a>
+            <a [routerLink]="['blog', blog.slug, blog.id]" class="btn btn-outline-primary">Continue Reading</a>
           </div>
         </article>
+        <!--
         <article class="row mb-5">
           <div class="col-12">
             <div class="post-slider">
@@ -257,6 +254,7 @@
             <a [routerLink]="['blog', 'test-blog', 123]" class="btn btn-outline-primary">Continue Reading</a>
           </div>
         </article>
+        -->
       </div>
     </div>
   </div>

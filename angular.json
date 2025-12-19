@@ -35,7 +35,8 @@
               "public/plugins/bootstrap/bootstrap.min.css",
               "public/plugins/slick/slick.css",
               "public/plugins/themify-icons/themify-icons.css",
-              "public/css/style.css"
+              "public/css/style.css",
+              "node_modules/quill/dist/quill.snow.css"
             ],
             "scripts": []
           },

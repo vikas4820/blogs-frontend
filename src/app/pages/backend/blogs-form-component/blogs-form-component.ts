@@ -5,12 +5,15 @@ import { BlogsCategoryService } from '../../../services/blogs-category-service';
 import { LoaderService } from '../../../services/loader-service';
 import { BlogsService } from '../../../services/blogs-service';
 import { ActivatedRoute } from '@angular/router';
+import { UserState } from '../../../states/user-state.service';
+import { QuillModule } from 'ngx-quill';
 
 @Component({
   selector: 'app-blogs-form-component',
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    QuillModule
   ],
   templateUrl: './blogs-form-component.html',
   styleUrl: './blogs-form-component.scss',
@@ -23,12 +26,28 @@ export class BlogsFormComponent {
   blogId!: string|null;
   blog!: any;
 
+  // editorModules = {
+  //   toolbar: [
+  //     ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+  //     [{ 'header': [1, 2, 3, 4, 5, 6, false] }],      // headers
+  //     [{ 'list': 'ordered' }, { 'list': 'bullet' }],  // lists
+  //     [{ 'script': 'sub' }, { 'script': 'super' }],   // sub/superscript
+  //     [{ 'indent': '-1' }, { 'indent': '+1' }],       // indent
+  //     [{ 'direction': 'rtl' }],                       // text direction
+  //     [{ 'size': ['small', false, 'large', 'huge'] }],// font size
+  //     [{ 'color': [] }, { 'background': [] }],        // color
+  //     [{ 'align': [] }],                              // text align
+  //     ['link', 'image', 'code-block', 'blockquote', 'formula', 'clean'] // links, images, code, quote, formula, remove
+  //   ]
+  // };
+
   constructor(
     private fb: FormBuilder,
     private blogService: BlogsService,
     private blogsCategoryService: BlogsCategoryService,
     private loader: LoaderService,
     private route: ActivatedRoute,
+    public userState: UserState
   ) {
     this.manageBlogForm();
   }
@@ -37,17 +56,19 @@ export class BlogsFormComponent {
     this.blogForm = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(5)]],
       slug: ['', Validators.required],
-      categoryId: ['', Validators.required],
+      blogCategory: ['', Validators.required],
       shortDescription: ['', Validators.required],
       content: ['', Validators.required],
       metaTitle: [''],
       metaDescription: [''],
       status: ['active', Validators.required],
+      user: [''],
     });
   }
 
   async ngOnInit() {
     try {
+      console.log(this.userState.user()?.sub);
       this.loader.show();
       await this.fetchCategories();
       const blogId = this.route.snapshot.paramMap.get('id');
@@ -70,12 +91,13 @@ export class BlogsFormComponent {
     this.blogForm.patchValue({
       title: this.blog.title,
       slug: this.blog.slug,
-      categoryId: this.blog.categoryId, 
+      blogCategory: this.blog.categoryId, 
       shortDescription: this.blog.shortDescription,
       content: this.blog.content,
       metaTitle: this.blog.metaTitle ?? '',
       metaDescription: this.blog.metaDescription ?? '',
       status: this.blog.status || 'active',
+      user: this.blog.user.id || null
     });
   }
 
@@ -103,7 +125,8 @@ export class BlogsFormComponent {
 
         const formValue = {
           ...this.blogForm.value,
-          categoryId: Number(this.blogForm.value.categoryId),
+          blogCategory: Number(this.blogForm.value.blogCategory),
+          user: Number(this.userState.user()?.sub)
         };
         let result;
         if(this.blogId && this.blog) {
