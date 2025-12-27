@@ -1,0 +1,90 @@
+<section class="page-header py-5 bg-light">
+  <div class="container text-center">
+    <h1 class="mb-2">Our Blog</h1>
+    <p class="text-muted mb-0">
+      Latest articles, insights, tutorials, and updates from our team
+    </p>
+  </div>
+</section>
+
+<div class="container mt-3">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb justify-content-center bg-transparent p-0">
+      <li class="breadcrumb-item">
+        <a routerLink="/">Home</a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">
+        Blog
+      </li>
+    </ol>
+  </nav>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 mb-5 mb-lg-0">
+        <article class="row mb-5" *ngFor="let blog of blogs">
+          <div class="col-12">
+            <div class="post-slider">
+              <img loading="lazy" src="images/post/post-1.jpg" class="img-fluid" alt="post-thumb" />
+            </div>
+          </div>
+          <div class="col-lg-10 mx-auto">
+            <h3>
+              <a class="post-title" href="post-details-1.html">{{ blog.title }}</a>
+            </h3>
+            <ul class="list-inline post-meta mb-4">
+              <li class="list-inline-item">
+                <i class="ti-user mr-2"></i
+                ><a href="author.html">{{ blog.user?.username?.toUpperCase() }}</a>
+              </li>
+              <li class="list-inline-item">Date : {{ blog.createdAt | date : 'MMMM d, y' }}</li>
+              <li class="list-inline-item">
+                Categories : <a href="#!" class="ml-1">{{ blog.blogCategory?.categoryName }}</a>
+              </li>
+              <li class="list-inline-item">
+                Tags : <a href="#!" class="ml-1">Photo </a> ,<a href="#!" class="ml-1">Image </a>
+              </li>
+            </ul>
+            <p>
+              {{ blog.shortDescription }}
+            </p>
+            <a [routerLink]="['blog', blog.slug, blog.id]" class="btn btn-outline-primary"
+              >Continue Reading</a
+            >
+          </div>
+        </article>
+      </div>
+    </div>
+    <nav *ngIf="totalPages > 1" class="mt-5">
+      <ul class="pagination justify-content-center">
+        <li class="page-item" [class.disabled]="currentPage === 1">
+          <a class="page-link" href="javascript:void(0)" (click)="changePage(currentPage - 1)">
+            Prev
+          </a>
+        </li>
+
+        <li class="page-item" *ngFor="let page of pages" [class.active]="page === currentPage">
+          <a class="page-link" href="javascript:void(0)" (click)="changePage(page)">
+            {{ page }}
+          </a>
+        </li>
+
+        <li class="page-item" [class.disabled]="currentPage === totalPages">
+          <a class="page-link" href="javascript:void(0)" (click)="changePage(currentPage + 1)">
+            Next
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <div class="row">
+      <div class="col-12 mb-5 mb-lg-0">
+        <div *ngIf="blogs.length === 0" class="text-center py-5">
+          <h4>No blogs found</h4>
+          <p>Try changing filters or search keywords</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

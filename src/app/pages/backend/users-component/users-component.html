@@ -20,7 +20,7 @@
           <tbody>
             <tr *ngFor="let user of users">
               <td class="data-id">{{ user.id }}</td>
-              <td>{{ user?.name || "---" }}</td>
+              <td>{{ user?.name || "N/A" }}</td>
               <td>{{ user.username.toUpperCase() }}</td>
               <td>{{ user.email }}</td>
               <td>{{ user.role.name }}</td>

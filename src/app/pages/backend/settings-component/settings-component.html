@@ -1,0 +1,148 @@
+<main>
+  <div class="table-data">
+    <div class="order">
+      <div class="head">
+        <h3>Blog Settings</h3>
+      </div>
+
+      <!-- TABS -->
+      <div class="settings-tabs">
+        <button class="tab-btn" [class.active]="activeTab === 'slider'" (click)="setTab('slider')">
+          Slider
+        </button>
+
+        <button
+          class="tab-btn"
+          [class.active]="activeTab === 'testimonial'"
+          (click)="setTab('testimonial')"
+        >
+          Testimonials
+        </button>
+      </div>
+
+      <form [formGroup]="settingsForm">
+        <!-- SLIDER TAB -->
+        <ng-container *ngIf="activeTab === 'slider'">
+          <div formArrayName="sliders">
+            <div
+              class="accordion-item"
+              *ngFor="let slide of sliders.controls; let i = index"
+              [class.active]="openIndex === i"
+              [formGroupName]="i"
+            >
+              <button type="button" class="accordion-header" (click)="toggleAccordion(i)">
+                Slide #{{ i + 1 }}
+                <div class="d-flex gap-2">
+                  <span>{{ openIndex === i ? '-' : '+' }}</span>
+
+                  <button
+                    type="button"
+                    class="remove-btn"
+                    (click)="removeSlider(i); $event.stopPropagation()"
+                  >
+                    ✕
+                  </button>
+                </div>
+              </button>
+
+              <div class="accordion-body" *ngIf="openIndex === i">
+                <div class="form-group">
+                  <label>Slider Image</label>
+                  <input type="file" (change)="onFileChange($event, slide, 'image')" />
+                </div>
+
+                <div class="form-group">
+                  <label>Heading</label>
+                  <input type="text" formControlName="heading" />
+                  <small
+                    class="error-text"
+                    *ngIf="slide.get('heading')?.errors?.['required'] && (slide.get('heading')?.touched || sliders.touched)"
+                  >
+                    Heading is required
+                  </small>
+                </div>
+
+                <div class="form-group">
+                  <label>Description</label>
+                  <textarea formControlName="description"></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label>Button Text</label>
+                  <input type="text" formControlName="buttonText" />
+                </div>
+
+                <div class="form-group">
+                  <label>Button URL</label>
+                  <input type="url" formControlName="buttonUrl" />
+                </div>
+              </div>
+            </div>
+
+            <button type="button" (click)="addSlider()">+ Add New Slide</button>
+          </div>
+        </ng-container>
+
+        <!-- TESTIMONIAL TAB -->
+        <ng-container *ngIf="activeTab === 'testimonial'">
+          <div formArrayName="testimonials">
+            <div
+              class="accordion-item"
+              *ngFor="let t of testimonials.controls; let i = index"
+              [class.active]="openIndex === i"
+              [formGroupName]="i"
+            >
+              <button type="button" class="accordion-header" (click)="toggleAccordion(i)">
+                Testimonial #{{ i + 1 }}
+                <div class="d-flex gap-2">
+                  <span>{{ openIndex === i ? '-' : '+' }}</span>
+
+                  <button
+                    type="button"
+                    class="remove-btn"
+                    (click)="removeTestimonial(i); $event.stopPropagation()"
+                  >
+                    ✕
+                  </button>
+                </div>
+              </button>
+
+              <div class="accordion-body" *ngIf="openIndex === i">
+                <div class="form-group">
+                  <label>Client Name</label>
+                  <input type="text" formControlName="name" />
+                  <small
+                    class="error-text"
+                    *ngIf="t.get('name')?.errors?.['required'] && (t.get('name')?.touched || testimonials.touched)"
+                  >
+                    Client name is required
+                  </small>
+                </div>
+
+                <div class="form-group">
+                  <label>Message</label>
+                  <textarea formControlName="message"></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label>Client Image</label>
+                  <input type="file" (change)="onFileChange($event, t, 'image')" />
+                </div>
+              </div>
+            </div>
+
+            <button type="button" (click)="addTestimonial()">+ Add New Testimonial</button>
+          </div>
+        </ng-container>
+
+        <button type="button" class="mt-2" *ngIf="activeTab === 'slider'" (click)="submitSlider()">
+          Save Slider Settings
+        </button>
+
+        <button type="button" class="mt-2" *ngIf="activeTab === 'testimonial'" (click)="submitTestimonial()">
+          Save Testimonial Settings
+        </button>
+      </form>
+    </div>
+  </div>
+</main>

@@ -45,7 +45,7 @@ body.dark {
 }
 
 body {
-  background: var(--grey);
+  background: var(--grey) !important;
   overflow-x: hidden;
 }
 
@@ -579,10 +579,11 @@ body.dark #content nav .profile-menu li a {
   padding: 16px 0;
 }
 #content main .table-data .order table tr td:first-child {
-  display: flex;
+  // display: flex;
   align-items: center;
   grid-gap: 12px;
   padding-left: 6px;
+  font-weight: bold;
 }
 #content main .table-data .order table td img {
   width: 36px;
@@ -949,3 +950,35 @@ body.dark #content nav .profile-menu li a {
 }
 
 /*AUTH RELATED CSS*/
+
+
+/*TOAST CSS*/
+.success-snackbar {
+  background: #2e7d32;
+  color: #fff;
+}
+
+.error-snackbar {
+  background: #d32f2f;
+  color: #fff;
+}
+
+.warning-snackbar {
+  background: #ed6c02;
+  color: #fff;
+}
+
+.info-snackbar {
+  background: #0288d1;
+  color: #fff;
+}
+
+/*TOAST CSS*/
+
+.breadcrumb-item a {
+  color: #ce8460 !important;
+}
+
+.a-btn {
+  color: white !important;
+}

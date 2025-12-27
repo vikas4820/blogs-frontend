@@ -1,9 +1,10 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
-import { BlogsCategoryService } from '../../../services/blogs-category-service';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { LoaderService } from '../../../services/loader-service';
 import { BlogsService } from '../../../services/blogs-service';
+import { ToastService } from '../../../services/toast-service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-blogs-component',
@@ -17,32 +18,51 @@ import { BlogsService } from '../../../services/blogs-service';
 export class BlogsComponent {
 
   blogs: any[] = [];
+  currentPage = 1;
+  totalPages = 0;
+  pages: number[] = [];
 
   constructor(
     private loader: LoaderService,
     private cdr: ChangeDetectorRef,
     private blogService: BlogsService,
+    private toastService: ToastService,
+    private route: ActivatedRoute,
+    private router: Router,
   ) {}
 
   async ngOnInit() {
     try {
-      this.loader.show();
-      await this.loadBlogs();
+      this.route.queryParams.subscribe(params => {
+        const page = Number(params['page']) || 1;
+        this.loadBlogs(page);
+      });
       this.cdr.detectChanges();
-    } catch (error) {
-      console.error('Error fetching blog categories:', error);
+    } catch (error: any) {
+      const errorMsg = error?.error?.message || error?.message;
+      this.toastService.error(errorMsg);
     } finally {
-      this.loader.hide();
+      
     }
   }
 
-  async loadBlogs() {
+  async loadBlogs(page = 1) {
     try {
-      const blogs = await this.blogService.findAll().toPromise();
-      this.blogs = blogs ?? [];
-      console.log("this.blogs", this.blogs)
+      this.loader.show();
+      const blogs = await firstValueFrom(
+        this.blogService.findAllWithPagination(page)
+      );
+      this.blogs = blogs?.data ?? [];
+      this.currentPage = blogs.meta.page;
+      this.totalPages = blogs.meta.totalPages;
+      this.pages = Array.from(
+        { length: this.totalPages },
+        (_, i) => i + 1
+      );
     } catch (error) {
       
+    } finally {
+      this.loader.hide();
     }
   }
 
@@ -52,6 +72,18 @@ export class BlogsComponent {
     } catch (error) {
       
     }
+  }
+
+  changePage(page: number) {
+    console.log("page", page)
+    console.log("this.totalPages", this.totalPages)
+    if (page < 1 || page > this.totalPages) return;
+
+    console.log("this.totalPages", this.totalPages)
+    this.router.navigate([], {
+      queryParams: { page },
+      queryParamsHandling: 'merge'
+    });
   }
   
 }

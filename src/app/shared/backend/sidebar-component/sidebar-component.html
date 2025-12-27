@@ -58,12 +58,18 @@
 					<span class="text">Users</span>
 				</a>
 			</li>
+			<li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" *ngIf="userState.isAdmin()">
+				<a href="#" [routerLink]="['/user/settings']">
+					<i class='bx bxs-cog bx-sm' ></i>
+					<span class="text">Settings</span>
+				</a>
+			</li>
 		</ul>
 		<ul class="side-menu bottom">
 			<li>
 				
 			<a [routerLink]="['/user/profile']">
-				<i class='bx bxs-cog bx-sm bx-spin-hover' ></i>
+				<i class='bx bxs-user bx-sm' ></i>
 				<span class="text">Profile</span>
 			</a> 
 				

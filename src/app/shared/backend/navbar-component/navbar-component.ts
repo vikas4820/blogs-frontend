@@ -2,12 +2,16 @@ import { CommonModule } from '@angular/common';
 import { Component, Signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SharedService } from '../../../services/shared-service';
-import { AuthService } from '../../../services/auth-service';
 import { TokenPayload, UserState } from '../../../states/user-state.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-navbar-component',
-  imports: [CommonModule, FormsModule],
+  imports: [
+    CommonModule, 
+    FormsModule,
+    RouterLink,
+  ],
   templateUrl: './navbar-component.html',
   styleUrl: './navbar-component.scss',
 })

@@ -12,9 +12,16 @@ export class BlogsService extends ApiService {
     super(apiService.http); 
   }
 
-  findAll(): Observable<any[]> {
+  findAll(): Observable<any> {
     return this.apiService.get<any[]>(this.blogUrl);
   }
+
+  findAllWithPagination(page = 1, limit = 5) {
+    return this.apiService.get<any>(
+      `${this.blogUrl}?page=${page}&limit=${limit}`
+    );
+  }
+
 
   getCount(): Observable<{ all: number, active: number, inactive: number }> {
     return this.apiService.get<{ all: number, active: number, inactive: number }>(`${this.blogUrl}/count`);

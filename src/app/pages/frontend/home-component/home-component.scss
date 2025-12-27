@@ -1,0 +1,159 @@
+/* ===================== SLIDER HEIGHT FIX ===================== */
+#blogLandingSlider,
+#blogLandingSlider .carousel-inner,
+#blogLandingSlider .carousel-item {
+  height: 520px;
+}
+
+@media (max-width: 768px) {
+  #blogLandingSlider,
+  #blogLandingSlider .carousel-inner,
+  #blogLandingSlider .carousel-item {
+    height: 360px;
+  }
+}
+
+/* ===================== IMAGE CROPPING ===================== */
+#blogLandingSlider .carousel-item {
+  position: relative;
+  overflow: hidden;
+}
+
+#blogLandingSlider .carousel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* ===================== DARK OVERLAY ===================== */
+.carousel-item::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.45),
+    rgba(0, 0, 0, 0.65)
+  );
+  z-index: 1;
+}
+
+/* ===================== CAPTION ===================== */
+.carousel-caption {
+  position: absolute;
+  z-index: 2;
+  bottom: 25%;
+  text-align: center;
+  padding: 0 20px;
+}
+
+.carousel-caption h1,
+.carousel-caption h2,
+.carousel-caption h3 {
+  color: #ffffff;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin-bottom: 16px;
+  text-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
+}
+
+.carousel-caption p {
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  max-width: 680px;
+  margin: 0 auto 24px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+}
+
+/* ===================== BUTTONS ===================== */
+.carousel-caption .btn {
+  padding: 12px 28px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 50px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+
+.carousel-caption .btn-primary {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+}
+
+.carousel-caption .btn-outline-light {
+  color: #ffffff;
+  border-color: #ffffff;
+}
+
+.carousel-caption .btn-outline-light:hover {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+/* ===================== MOBILE SLIDER TEXT ===================== */
+@media (max-width: 767px) {
+
+  .carousel-caption {
+    bottom: 18%;
+    padding: 0 16px;
+  }
+
+  .carousel-caption p,
+  .carousel-caption .btn {
+    display: none !important;
+  }
+
+  .carousel-caption h1,
+  .carousel-caption h2,
+  .carousel-caption h3,
+  .carousel-caption h5 {
+    display: block !important;
+    color: #ffffff !important;
+    font-size: 1.4rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 0;
+    text-shadow: 0 4px 14px rgba(0, 0, 0, 0.75);
+  }
+}
+
+/* ===================== BLOG CARDS ===================== */
+.blog-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 32px 28px;
+  height: 100%;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.05);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.blog-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.08);
+}
+
+.blog-card h5 {
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.blog-card p {
+  color: #6c757d;
+  margin-bottom: 0;
+  line-height: 1.6;
+}
+
+/* ===================== ICON BOX ===================== */
+.icon-box {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: rgba(13, 110, 253, 0.12);
+  color: #0d6efd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin-bottom: 20px;
+}

@@ -35,6 +35,14 @@
             </td>
             <td>
               <div class="d-flex gap-2">
+
+                <button
+                  class="btn btn-sm mx-1 btn-outline-primary"
+                  [routerLink]="['/blog', blog.slug, blog.id]"
+                >
+                  <i class="bx bx-show"></i>
+                </button>
+
                 <button
                   class="btn btn-sm btn-outline-primary"
                   [routerLink]="['/user/blogs/edit', blog.id]"
@@ -50,6 +58,28 @@
           </tr>
         </tbody>
       </table>
+
+      <nav *ngIf="totalPages > 1" class="mt-5">
+        <ul class="pagination justify-content-center">
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <a class="page-link" href="javascript:void(0)" (click)="changePage(currentPage - 1)">
+              Prev
+            </a>
+          </li>
+
+          <li class="page-item" *ngFor="let page of pages" [class.active]="page === currentPage">
+            <a class="page-link" href="javascript:void(0)" (click)="changePage(page)">
+              {{ page }}
+            </a>
+          </li>
+
+          <li class="page-item" [class.disabled]="currentPage === totalPages">
+            <a class="page-link" href="javascript:void(0)" (click)="changePage(currentPage + 1)">
+              Next
+            </a>
+          </li>
+        </ul>
+      </nav>
     </div>
   </div>
 </main>

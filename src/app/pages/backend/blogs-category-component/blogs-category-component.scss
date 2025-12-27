@@ -2,3 +2,19 @@
     // display: block !important;
 	font-weight: bolder !important;
 }
+
+.pagination .page-link {
+  border-radius: 6px;
+  margin: 0 4px;
+  color: #333;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #ce8460;
+  border-color: #ce8460;
+  color: #fff;
+}
+
+.pagination .page-link:hover {
+  background-color: #f1f1f1;
+}

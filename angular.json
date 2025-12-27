@@ -36,9 +36,13 @@
               "public/plugins/slick/slick.css",
               "public/plugins/themify-icons/themify-icons.css",
               "public/css/style.css",
-              "node_modules/quill/dist/quill.snow.css"
+              "node_modules/quill/dist/quill.snow.css",
+              "node_modules/aos/dist/aos.css"
             ],
-            "scripts": []
+            "scripts": [
+              "public/plugins/jQuery/jquery.min.js",
+              "public/plugins/bootstrap/bootstrap.min.js"
+            ]
           },
           "configurations": {
             "production": {

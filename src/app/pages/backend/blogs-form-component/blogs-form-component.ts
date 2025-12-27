@@ -4,9 +4,11 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } 
 import { BlogsCategoryService } from '../../../services/blogs-category-service';
 import { LoaderService } from '../../../services/loader-service';
 import { BlogsService } from '../../../services/blogs-service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserState } from '../../../states/user-state.service';
 import { QuillModule } from 'ngx-quill';
+import { firstValueFrom } from 'rxjs';
+import { ToastService } from '../../../services/toast-service';
 
 @Component({
   selector: 'app-blogs-form-component',
@@ -47,7 +49,9 @@ export class BlogsFormComponent {
     private blogsCategoryService: BlogsCategoryService,
     private loader: LoaderService,
     private route: ActivatedRoute,
-    public userState: UserState
+    public userState: UserState,
+    private toastService: ToastService,
+    private router: Router,
   ) {
     this.manageBlogForm();
   }
@@ -75,11 +79,14 @@ export class BlogsFormComponent {
       this.blogId = blogId;
 
       if(this.blogId) {
-        this.blog = await this.blogService.getOne(this.blogId).toPromise();
+        this.blog = await firstValueFrom(
+          this.blogService.getOne(this.blogId)
+        );
         this.patch();
       }
-    } catch (error) {
-      
+    } catch (error: any) {
+      const errorMsg = error?.error?.message || error?.message;
+      this.toastService.error(errorMsg);
     } finally {
       this.loader.hide();
     }
@@ -104,10 +111,9 @@ export class BlogsFormComponent {
 
   async fetchCategories() {
     try {
-      const categories = await this.blogsCategoryService
-        .findAll()
-        .toPromise();
-
+      const categories = await firstValueFrom(
+        this.blogsCategoryService.findAll()
+      );
       this.categories = categories ?? [];
     } catch (error) {
       console.log(error)
@@ -132,17 +138,20 @@ export class BlogsFormComponent {
         if(this.blogId && this.blog) {
           // result = await this.blogService.update(this.blogId, this.blogForm.value).toPromise();
         } else {
-          result = await this.blogService.create(formValue).toPromise();
+          result = await firstValueFrom(
+            this.blogService.create(formValue)
+          );
         }
 
-        console.log("result", result);
 
         if(result.id) {
           this.blog = result;
+          this.router.navigate(['/user/blogs']);
         }
       }
-    } catch (error) {
-      console.log(error)
+    } catch (error: any) {
+      const errorMsg = error?.error?.message || error?.message;
+      this.toastService.error(errorMsg);
     } finally {
       
     }

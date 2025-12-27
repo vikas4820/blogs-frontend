@@ -6,7 +6,6 @@ import { RegisterComponent } from './auth/register-component/register-component'
 import { HomeComponent } from './pages/frontend/home-component/home-component';
 import { BlogComponent } from './pages/frontend/blog-component/blog-component';
 import { AuthorComponent } from './pages/frontend/author-component/author-component';
-import { AboutUsComponent } from './pages/frontend/about-us-component/about-us-component';
 import { ContactUsComponent } from './pages/frontend/contact-us-component/contact-us-component';
 import { PrivacyPolicyComponent } from './pages/frontend/privacy-policy-component/privacy-policy-component';
 import { TermsConditionsComponent } from './pages/frontend/terms-conditions-component/terms-conditions-component';
@@ -23,6 +22,8 @@ import { UsersFormComponent } from './pages/backend/users-form-component/users-f
 import { UserProfileComponent } from './pages/backend/user-profile-component/user-profile-component';
 import { UnauthorizedComponent } from './shared/unauthorized-component/unauthorized-component';
 import { NotFoundComponent } from './shared/not-found-component/not-found-component';
+import { BlogListingComponent } from './pages/frontend/blog-listing-component/blog-listing-component';
+import { SettingsComponent } from './pages/backend/settings-component/settings-component';
 
 export const routes: Routes = [
 
@@ -31,10 +32,11 @@ export const routes: Routes = [
         component: FrontendComponent,
         children: [
             { path: '', component: HomeComponent }, 
+            { path: 'blogs', component: BlogListingComponent }, 
             { path: 'blog/:slug/:id', component: BlogComponent }, 
             { path: 'author', component: AuthorComponent, canActivate: [authGuard] }, 
             { path: 'contact-us', component: ContactUsComponent }, 
-            { path: 'about-us', component: AboutUsComponent }, 
+            // { path: 'about-us', component: AboutUsComponent }, 
             { path: 'privacy-policy', component: PrivacyPolicyComponent }, 
             { path: 'terms-conditions', component: TermsConditionsComponent }, 
         ]
@@ -54,6 +56,7 @@ export const routes: Routes = [
             { path: 'all-users', component: UsersComponent, canActivate: [authGuard], data: { roles: ['admin'] } },
             { path: 'all-users/edit/:id', component: UsersFormComponent, canActivate: [authGuard], data: { roles: ['admin'] } },
             { path: 'profile', component: UserProfileComponent, canActivate: [authGuard], data: { roles: ['admin', 'user'] } },
+            { path: 'settings', component: SettingsComponent, canActivate: [authGuard], data: { roles: ['admin', 'user'] } },
         ]
     },
 
