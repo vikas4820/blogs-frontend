@@ -35,11 +35,11 @@ export class AuthService extends ApiService {
   }
 
   forgotPassword(email: string): Observable<any> {
-    return this.apiService.post(`${this.authUrl}/forgot-password`, { email });
+    return this.apiService.post(`${this.authUrl}/forgot-password`, email);
   }
 
-  resetPassword(token: string, newPassword: string): Observable<any> {
-    return this.apiService.post(`${this.authUrl}/reset-password`, { token, newPassword });
+  resetPassword(token: string, password: string): Observable<any> {
+    return this.apiService.post(`${this.authUrl}/reset-password`, { token, password });
   }
 
   getToken(): string | null {

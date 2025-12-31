@@ -1,7 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ToastService } from '../../services/toast-service';
+import { AuthService } from '../../services/auth-service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-resset-password-component',
@@ -14,11 +17,26 @@ import { RouterLink } from '@angular/router';
   styleUrl: './resset-password-component.scss',
 })
 export class RessetPasswordComponent {
+
+  disabledBtn: boolean = false;
+  token!: string|null;
   resetPasswordForm!: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private authService: AuthService,
+    private toastService: ToastService,
+  ) {}
 
   ngOnInit() {
+
+    this.token = this.route.snapshot.queryParamMap.get('token');
+    if (!this.token) {
+      alert('Invalid or missing reset token');
+      return;
+    }
+
     this.resetPasswordForm = this.fb.group(
       {
         password: ['', [Validators.required, Validators.minLength(6)]],
@@ -37,11 +55,37 @@ export class RessetPasswordComponent {
     return password === confirmPassword ? null : { mismatch: true };
   }
 
-  onSubmit() {
-    if (this.resetPasswordForm.valid) {
-      console.log(this.resetPasswordForm.value);
-    } else {
+  async onSubmit() {
+    if (this.resetPasswordForm.invalid || !this.token) {
       this.resetPasswordForm.markAllAsTouched();
+      return;
+    }
+
+    try {
+      this.disabledBtn = true;
+
+      // ✅ Correct way to read password
+      const password = this.resetPasswordForm.get('password')?.value;
+
+      if (!password) {
+        this.toastService.error('Password is required');
+        return;
+      }
+
+      const result = await firstValueFrom(
+        this.authService.resetPassword(this.token, password)
+      );
+
+      console.log('result', result);
+      this.toastService.success('Password reset successfully');
+
+    } catch (error: any) {
+      const errorMessage =
+        error?.error?.message || error?.message || 'Something went wrong';
+      this.toastService.error(errorMessage);
+    } finally {
+      this.disabledBtn = false;
     }
   }
+
 }
