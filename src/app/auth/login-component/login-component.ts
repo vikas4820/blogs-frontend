@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth-service';
 import { UserState } from '../../states/user-state.service';
+import { ToastService } from '../../services/toast-service';
 
 @Component({
   selector: 'app-login-component',
@@ -18,12 +19,14 @@ import { UserState } from '../../states/user-state.service';
 export class LoginComponent {
 
   loginForm!: FormGroup;
+  disabledBtn: boolean = false;
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private route: ActivatedRoute,
     private router: Router,
     private userState: UserState,
+    private toastService: ToastService,
   ) {}
 
   ngOnInit() {
@@ -40,22 +43,25 @@ export class LoginComponent {
   }
 
   async onSubmit() {
-    try {
-      if (this.loginForm.valid) {
+    if (this.loginForm.valid) {
+      try {
+        this.disabledBtn= true;
         const response = await this.authService.login(this.loginForm.value).toPromise();
-        console.log(response)
         if(response && response.access_token) {
           localStorage.setItem('access_token', response.access_token);
           this.authService.initializeFromToken();
           const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/author';
           this.router.navigateByUrl(returnUrl);
-          console.log("response", response);
+          this.toastService.success("YOU HAVE LOGGED IN");
         }
-      } else {
-        this.loginForm.markAllAsTouched(); 
+      } catch (error: any) {
+        const errorMessage = error?.error?.message || error?.message;
+        this.toastService.error(errorMessage);
+      } finally {
+        this.disabledBtn = false;
       }
-    } catch (error) {
-      
+    } else {
+      this.loginForm.markAllAsTouched(); 
     }
   }
 }

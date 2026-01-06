@@ -1,0 +1,19 @@
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  color: #333;
+  text-decoration: none;
+}
+
+.navbar-brand i {
+  font-size: 1.6rem;
+  color: #ff6f61; 
+  margin-right: 8px; 
+}
+
+.navbar-brand span {
+  font-size: 1.5rem;
+  color: #333; 
+}

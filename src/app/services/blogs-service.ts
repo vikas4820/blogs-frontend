@@ -34,5 +34,9 @@ export class BlogsService extends ApiService {
   create(formData: any): Observable<any> {
     return this.apiService.post(`${this.blogUrl}`, formData);
   }
+
+  update(id: number, formData: any): Observable<any> {
+    return this.apiService.put(`${this.blogUrl}/${id}`, formData);
+  }
   
 }

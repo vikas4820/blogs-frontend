@@ -10,7 +10,7 @@
         <!-- Blog Title -->
         <div class="form-group">
           <label>Blog Title *</label>
-          <input type="text" formControlName="title" placeholder="Enter blog title" />
+          <input type="text" formControlName="title" placeholder="Enter blog title" (input)="onTitleChange()"/>
           <small *ngIf="blogForm.get('title')?.touched && blogForm.get('title')?.invalid">
             <span *ngIf="blogForm.get('title')?.errors?.['required']"> Title is required </span>
             <span *ngIf="blogForm.get('title')?.errors?.['minlength']">
@@ -22,7 +22,7 @@
         <!-- Slug -->
         <div class="form-group">
           <label>Slug *</label>
-          <input type="text" formControlName="slug" placeholder="enter-blog-slug" />
+          <input type="text" formControlName="slug" placeholder="blog-slug-will-be-generated-automatically" readonly/>
           <small *ngIf="blogForm.get('slug')?.touched && blogForm.get('slug')?.invalid">
             Slug is required
           </small>
@@ -107,7 +107,7 @@
         </div>
 
         <!-- Submit -->
-        <button type="submit" [disabled]="blogForm.invalid || imageError">Create Blog</button>
+        <button type="submit" [disabled]="blogForm.invalid || imageError">{{ blogId ? "Update" : "Create" }} Blog</button>
       </form>
     </div>
   </div>

@@ -15,9 +15,8 @@
                       class="form-control"
                       formControlName="username"
                       [ngClass]="{
-                        'is-invalid':
-                          registerForm.get('username')?.touched &&
-                          registerForm.get('username')?.invalid
+                        'is-invalid': registerForm.get('username')?.touched && registerForm.get('username')?.invalid,
+                        'is-valid': registerForm.get('username')?.touched && registerForm.get('username')?.valid
                       }"
                     />
                     <div
@@ -42,8 +41,8 @@
                       class="form-control"
                       formControlName="email"
                       [ngClass]="{
-                        'is-invalid':
-                          registerForm.get('email')?.touched && registerForm.get('email')?.invalid
+                        'is-invalid': registerForm.get('email')?.touched && registerForm.get('email')?.invalid,
+                        'is-valid': registerForm.get('email')?.touched && registerForm.get('email')?.valid
                       }"
                     />
                     <div
@@ -67,9 +66,8 @@
                       class="form-control"
                       formControlName="password"
                       [ngClass]="{
-                        'is-invalid':
-                          registerForm.get('password')?.touched &&
-                          registerForm.get('password')?.invalid
+                        'is-invalid': registerForm.get('password')?.touched && registerForm.get('password')?.invalid,
+                        'is-valid': registerForm.get('password')?.touched && registerForm.get('password')?.valid
                       }"
                     />
                     <div
@@ -94,9 +92,8 @@
                       class="form-control"
                       formControlName="confirmPassword"
                       [ngClass]="{
-                        'is-invalid':
-                          registerForm.get('confirmPassword')?.touched &&
-                          registerForm.get('confirmPassword')?.invalid
+                        'is-invalid':  registerForm.get('confirmPassword')?.touched && registerForm.get('confirmPassword')?.invalid,
+                        'is-valid': registerForm.get('confirmPassword')?.touched && registerForm.get('confirmPassword')?.valid
                       }"
                     />
                     <div

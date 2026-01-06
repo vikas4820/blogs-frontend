@@ -5,6 +5,7 @@ import { BlogsCategoryService } from '../../../services/blogs-category-service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoaderService } from '../../../services/loader-service';
 import { ToastService } from '../../../services/toast-service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-blogs-category-form-component',
@@ -39,12 +40,15 @@ export class BlogsCategoryFormComponent {
       this.categoryId = categoryId;
 
       if(this.categoryId) {
-        this.category = await this.blogsCategoryService.getOne(this.categoryId).toPromise();
+        this.category = await firstValueFrom(
+          this.blogsCategoryService.getOne(this.categoryId)
+        )
         this.patch();
       }
 
-    } catch (error) {
-      
+    } catch (error: any) {
+      const errorMessage = error?.error?.message || error?.message || 'Something goes wrong';
+      this.toastService.error(errorMessage);
     } finally {
       this.loader.hide();
     }
@@ -70,22 +74,28 @@ export class BlogsCategoryFormComponent {
     if (this.categoryForm.valid) {
       let result;
       try {
+        this.loader.show();
         if(this.categoryId && this.category) {
-          result = await this.blogsCategoryService.update(this.categoryId, this.categoryForm.value).toPromise();
+          result = await firstValueFrom(
+            this.blogsCategoryService.update(this.categoryId, this.categoryForm.value)
+          );
         } else {
-          result = await this.blogsCategoryService.create(this.categoryForm.value).toPromise();
+          result = await firstValueFrom(
+            this.blogsCategoryService.create(this.categoryForm.value)
+          )
         }
 
         if(result.id) {
           this.category = result;
           this.router.navigate(['/user/blogs-category']);
+          this.toastService.success('New category has been added successfully');
           // this.patch();
         }
       } catch (error: any) {
         const errorMsg = error?.error?.message || error?.message;
         this.toastService.error(errorMsg);
       } finally {
-
+        this.loader.hide();
       }
     }
   }

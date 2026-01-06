@@ -27,6 +27,8 @@ export class BlogsFormComponent {
   categories: any[] = [];
   blogId!: string|null;
   blog!: any;
+  titleWordError = false;
+  MAX_WORDS = 10;
 
   // editorModules = {
   //   toolbar: [
@@ -59,7 +61,7 @@ export class BlogsFormComponent {
   manageBlogForm() {
     this.blogForm = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(5)]],
-      slug: ['', Validators.required],
+      slug: [{ value: '', disabled: true }],
       blogCategory: ['', Validators.required],
       shortDescription: ['', Validators.required],
       content: ['', Validators.required],
@@ -127,24 +129,31 @@ export class BlogsFormComponent {
 
   async submitForm() {
     try {
-      if(this.blogForm.valid) {
+      if (this.blogForm.valid) {
+
+        const rawFormValue = this.blogForm.getRawValue(); // IMPORTANT
 
         const formValue = {
-          ...this.blogForm.value,
-          blogCategory: Number(this.blogForm.value.blogCategory),
-          user: Number(this.userState.user()?.sub)
+          ...rawFormValue,
+          blogCategory: Number(rawFormValue.blogCategory),
+          user: Number(this.userState.user()?.sub),
         };
+
         let result;
-        if(this.blogId && this.blog) {
-          // result = await this.blogService.update(this.blogId, this.blogForm.value).toPromise();
+
+        if (this.blogId && this.blog) {
+          // UPDATE CASE
+          result = await firstValueFrom(
+            this.blogService.update(Number(this.blogId), formValue)
+          );
         } else {
+          // CREATE CASE
           result = await firstValueFrom(
             this.blogService.create(formValue)
           );
         }
 
-
-        if(result.id) {
+        if (result?.id) {
           this.blog = result;
           this.router.navigate(['/user/blogs']);
         }
@@ -152,8 +161,43 @@ export class BlogsFormComponent {
     } catch (error: any) {
       const errorMsg = error?.error?.message || error?.message;
       this.toastService.error(errorMsg);
-    } finally {
-      
     }
   }
+
+  onTitleChange() {
+    const titleControl = this.blogForm.get('title');
+    const slugControl = this.blogForm.get('slug');
+
+    if (!titleControl || !slugControl) return;
+
+    let title = titleControl.value || '';
+
+    // Normalize spaces
+    title = title.trim().replace(/\s+/g, ' ');
+
+    const words = title.split(' ');
+
+    // Enforce word limit
+    if (words.length > this.MAX_WORDS) {
+      title = words.slice(0, this.MAX_WORDS).join(' ');
+      titleControl.setValue(title, { emitEvent: false });
+      this.titleWordError = true;
+    } else {
+      this.titleWordError = false;
+    }
+
+    // Generate slug
+    const slug = this.generateSlug(title);
+    slugControl.setValue(slug);
+  }
+
+  generateSlug(text: string): string {
+    return text
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9\s-]/g, '') // remove special chars
+      .replace(/\s+/g, '-')        // spaces → hyphen
+      .replace(/-+/g, '-');        // remove multiple hyphens
+  }
+  
 }

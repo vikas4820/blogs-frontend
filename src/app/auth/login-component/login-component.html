@@ -15,9 +15,8 @@
                       class="form-control"
                       formControlName="usernameOrEmail"
                       [ngClass]="{
-                        'is-invalid':
-                          loginForm.get('usernameOrEmail')?.touched &&
-                          loginForm.get('usernameOrEmail')?.invalid
+                        'is-invalid': loginForm.get('usernameOrEmail')?.touched && loginForm.get('usernameOrEmail')?.invalid,
+                        'is-valid': loginForm.get('usernameOrEmail')?.touched && loginForm.get('usernameOrEmail')?.valid
                       }"
                     />
                     <div
@@ -42,8 +41,8 @@
                       class="form-control"
                       formControlName="password"
                       [ngClass]="{
-                        'is-invalid':
-                          loginForm.get('password')?.touched && loginForm.get('password')?.invalid
+                        'is-invalid':loginForm.get('password')?.touched && loginForm.get('password')?.invalid,
+                        'is-valid': loginForm.get('password')?.touched && loginForm.get('password')?.valid
                       }"
                     />
                     <div
@@ -76,7 +75,7 @@
                     <button
                       type="submit"
                       class="btn btn-primary btn-block"
-                      [disabled]="loginForm.invalid"
+                      [disabled]="loginForm.invalid || disabledBtn"
                     >
                       Sign me in
                     </button>

@@ -24,6 +24,7 @@ import { UnauthorizedComponent } from './shared/unauthorized-component/unauthori
 import { NotFoundComponent } from './shared/not-found-component/not-found-component';
 import { BlogListingComponent } from './pages/frontend/blog-listing-component/blog-listing-component';
 import { SettingsComponent } from './pages/backend/settings-component/settings-component';
+import { AboutUsComponent } from './pages/frontend/about-us-component/about-us-component';
 
 export const routes: Routes = [
 
@@ -36,7 +37,7 @@ export const routes: Routes = [
             { path: 'blog/:slug/:id', component: BlogComponent }, 
             { path: 'author', component: AuthorComponent, canActivate: [authGuard] }, 
             { path: 'contact-us', component: ContactUsComponent }, 
-            // { path: 'about-us', component: AboutUsComponent }, 
+            { path: 'about-us', component: AboutUsComponent }, 
             { path: 'privacy-policy', component: PrivacyPolicyComponent }, 
             { path: 'terms-conditions', component: TermsConditionsComponent }, 
         ]

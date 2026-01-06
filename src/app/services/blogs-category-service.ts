@@ -25,6 +25,15 @@ export class BlogsCategoryService extends ApiService {
     return this.apiService.get<any[]>(this.blogCategoryUrl);
   }
 
+  findAllWithPagination(page?: number, limit?: number): Observable<any> {
+    if (!page || !limit) {
+      return this.findAll() as Observable<any>;
+    }
+    return this.apiService.get<any>(
+      `${this.blogCategoryUrl}?page=${page}&limit=${limit}`
+    );
+  }
+
   getCount(): Observable<{ all: number, active: number, inactive: number }> {
     return this.apiService.get<{ all: number, active: number, inactive: number }>(`${this.blogCategoryUrl}/count`);
   }

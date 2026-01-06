@@ -75,11 +75,8 @@ export class BlogsComponent {
   }
 
   changePage(page: number) {
-    console.log("page", page)
-    console.log("this.totalPages", this.totalPages)
     if (page < 1 || page > this.totalPages) return;
 
-    console.log("this.totalPages", this.totalPages)
     this.router.navigate([], {
       queryParams: { page },
       queryParamsHandling: 'merge'

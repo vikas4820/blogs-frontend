@@ -27,12 +27,12 @@
         <article class="row mb-5" *ngFor="let blog of blogs">
           <div class="col-12">
             <div class="post-slider">
-              <img loading="lazy" src="images/post/post-1.jpg" class="img-fluid" alt="post-thumb" />
+              <img [src]="blog?.image || 'images/default-image.png'" class="img-fluid" alt="post-thumb" />
             </div>
           </div>
           <div class="col-lg-10 mx-auto">
             <h3>
-              <a class="post-title" href="post-details-1.html">{{ blog.title }}</a>
+              <a class="post-title" [routerLink]="['/blog', blog.slug, blog.id]">{{ blog.title }}</a>
             </h3>
             <ul class="list-inline post-meta mb-4">
               <li class="list-inline-item">
@@ -41,16 +41,17 @@
               </li>
               <li class="list-inline-item">Date : {{ blog.createdAt | date : 'MMMM d, y' }}</li>
               <li class="list-inline-item">
-                Categories : <a href="#!" class="ml-1">{{ blog.blogCategory?.categoryName }}</a>
+                Categories : <a href="javascript:void(0)" class="ml-1">{{ blog.blogCategory?.categoryName }}</a>
               </li>
               <li class="list-inline-item">
-                Tags : <a href="#!" class="ml-1">Photo </a> ,<a href="#!" class="ml-1">Image </a>
+                Tags : <a href="javascript:void(0)" class="ml-1">Photo </a> ,<a href="javascript:void(0)" class="ml-1">Image </a>
               </li>
             </ul>
-            <p>
+            <div class="content" [innerHTML]="blog.shortDescription"></div>
+            <!-- <p>
               {{ blog.shortDescription }}
-            </p>
-            <a [routerLink]="['blog', blog.slug, blog.id]" class="btn btn-outline-primary"
+            </p> -->
+            <a [routerLink]="['/blog', blog.slug, blog.id]" class="btn btn-outline-primary"
               >Continue Reading</a
             >
           </div>
