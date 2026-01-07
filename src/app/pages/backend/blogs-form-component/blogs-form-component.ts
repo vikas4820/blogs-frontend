@@ -9,6 +9,7 @@ import { UserState } from '../../../states/user-state.service';
 import { QuillModule } from 'ngx-quill';
 import { firstValueFrom } from 'rxjs';
 import { ToastService } from '../../../services/toast-service';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-blogs-form-component',
@@ -28,7 +29,12 @@ export class BlogsFormComponent {
   blogId!: string|null;
   blog!: any;
   titleWordError = false;
+  selectedImages: File[] = [];
+  existingImages: string[] = []; // from backend
+  imagePreviews: string[] = [];  // preview URLs
+  removedImages: string[] = [];  // images user removed
   MAX_WORDS = 10;
+  MAX_IMAGES = 3;
 
   // editorModules = {
   //   toolbar: [
@@ -96,11 +102,18 @@ export class BlogsFormComponent {
 
   patch() {
     if (!this.blog) return;
-
+  
+    this.existingImages = [...(this.blog.images || [])];
+    
+    const url = environment.apiUrl; 
+    this.imagePreviews = this.existingImages.map(
+      img => `${url}/uploads/blogs/${img}`
+    );
+  
     this.blogForm.patchValue({
       title: this.blog.title,
       slug: this.blog.slug,
-      blogCategory: this.blog.categoryId, 
+      blogCategory: this.blog.blogCategory ? this.blog.blogCategory.id : null,
       shortDescription: this.blog.shortDescription,
       content: this.blog.content,
       metaTitle: this.blog.metaTitle ?? '',
@@ -108,6 +121,8 @@ export class BlogsFormComponent {
       status: this.blog.status || 'active',
       user: this.blog.user.id || null
     });
+  
+    this.imageError = this.imagePreviews.length === 0;
   }
 
 
@@ -122,16 +137,62 @@ export class BlogsFormComponent {
     }
   }
 
-  onFileChange(event: any) {
-    const file = event.target.files[0];
-    this.imageError = !file;
-  }
+  async submitForm() {
+    try {
+      if (this.blogForm.valid && !this.imageError) {
+  
+        const rawFormValue = this.blogForm.getRawValue();
+  
+        const formData = new FormData();
+  
+        formData.append('title', rawFormValue.title);
+        formData.append('slug', rawFormValue.slug);
+        formData.append('blogCategory', rawFormValue.blogCategory);
+        formData.append('shortDescription', rawFormValue.shortDescription);
+        formData.append('content', rawFormValue.content);
+        formData.append('metaTitle', rawFormValue.metaTitle || '');
+        formData.append('metaDescription', rawFormValue.metaDescription || '');
+        formData.append('status', rawFormValue.status);
+        formData.append('user', String(this.userState.user()?.sub));
+  
+        this.selectedImages.forEach((file) => {
+          formData.append('images', file);
+        });
+        
+        this.removedImages.forEach(img => {
+          formData.append('removedImages[]', img);
+        });
+  
+        let result;
+  
+        if (this.blogId) {
+          result = await firstValueFrom(
+            this.blogService.update(Number(this.blogId), formData)
+          );
+        } else {
+          result = await firstValueFrom(
+            this.blogService.create(formData)
+          );
+        }
+  
+        if (result?.id) {
+          this.router.navigate(['/user/blogs']);
+        }
 
+        const message = this.blogId ? 'Blog updated Successfully' : 'Blog created Successfully';
+        this.toastService.success(message);
+      }
+    } catch (error: any) {
+      this.toastService.error(error?.error?.message || error?.message);
+    }
+  }
+  
+  /*
   async submitForm() {
     try {
       if (this.blogForm.valid) {
 
-        const rawFormValue = this.blogForm.getRawValue(); // IMPORTANT
+        const rawFormValue = this.blogForm.getRawValue(); 
 
         const formValue = {
           ...rawFormValue,
@@ -142,12 +203,10 @@ export class BlogsFormComponent {
         let result;
 
         if (this.blogId && this.blog) {
-          // UPDATE CASE
           result = await firstValueFrom(
             this.blogService.update(Number(this.blogId), formValue)
           );
         } else {
-          // CREATE CASE
           result = await firstValueFrom(
             this.blogService.create(formValue)
           );
@@ -163,6 +222,7 @@ export class BlogsFormComponent {
       this.toastService.error(errorMsg);
     }
   }
+  */
 
   onTitleChange() {
     const titleControl = this.blogForm.get('title');
@@ -199,5 +259,45 @@ export class BlogsFormComponent {
       .replace(/\s+/g, '-')        // spaces → hyphen
       .replace(/-+/g, '-');        // remove multiple hyphens
   }
+
+  onFileChange(event: any) {
+    const files: FileList = event.target.files;
+    if (!files) return;
+  
+    const totalImages =
+      this.existingImages.length + files.length;
+  
+    if (totalImages > this.MAX_IMAGES) {
+      this.toastService.error('Maximum 3 images allowed');
+      return;
+    }
+  
+    Array.from(files).forEach(file => {
+      this.selectedImages.push(file);
+  
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreviews.push(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    });
+  
+    this.imageError = false;
+  }
+
+  removeImage(index: number) {
+    const removed = this.existingImages[index];
+  
+    if (removed) {
+      this.removedImages.push(removed);
+      this.existingImages.splice(index, 1);
+    }
+  
+    this.imagePreviews.splice(index, 1);
+    this.selectedImages.splice(index, 1);
+  
+    this.imageError = this.imagePreviews.length === 0;
+  }
+  
   
 }

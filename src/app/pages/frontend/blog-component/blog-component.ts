@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { LoaderService } from './../../../services/loader-service';
 import { ToastService } from '../../../services/toast-service';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-blog-component',
@@ -19,6 +20,7 @@ export class BlogComponent {
   blogId!: string|null;
   blog!: any;
   safeContent!: SafeHtml;
+  baseBackEndUrl = environment.apiUrl; 
 
   constructor(
     private route: ActivatedRoute,
@@ -52,5 +54,15 @@ export class BlogComponent {
     } catch (error) {
       
     }
+  }
+
+  get blogImages(): string[] {
+    if (!this.blog) return [];
+    if (this.blog.images && this.blog.images.length > 0) {
+      // prepend base URL
+      return this.blog.images.map((img: any) => this.baseBackEndUrl + '/uploads/blogs/' + img);
+    }
+    // fallback default image
+    return ['assets/images/default-image.png'];
   }
 }

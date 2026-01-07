@@ -4,6 +4,7 @@ import { BlogsService } from '../../../services/blogs-service';
 import { LoaderService } from '../../../services/loader-service';
 import { CommonModule } from '@angular/common';
 import { firstValueFrom } from 'rxjs';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-blog-listing-component',
@@ -20,6 +21,7 @@ export class BlogListingComponent implements OnInit {
   currentPage = 1;
   totalPages = 0;
   pages: number[] = [];
+  baseBackEndUrl = environment.apiUrl; 
 
   constructor(
     private blogService: BlogsService,
@@ -72,5 +74,12 @@ export class BlogListingComponent implements OnInit {
       queryParams: { page },
       queryParamsHandling: 'merge'
     });
+  }
+
+  getBlogImage(blog: any) {
+    if (blog.images && blog.images.length > 0) {
+      return this.baseBackEndUrl + '/uploads/blogs/' + blog.images[0];
+    }
+    return 'images/default-image.png';
   }
 }

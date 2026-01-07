@@ -7,7 +7,6 @@
       <hr />
 
       <form [formGroup]="blogForm" (ngSubmit)="submitForm()" class="blog-form">
-        <!-- Blog Title -->
         <div class="form-group">
           <label>Blog Title *</label>
           <input type="text" formControlName="title" placeholder="Enter blog title" (input)="onTitleChange()"/>
@@ -19,7 +18,6 @@
           </small>
         </div>
 
-        <!-- Slug -->
         <div class="form-group">
           <label>Slug *</label>
           <input type="text" formControlName="slug" placeholder="blog-slug-will-be-generated-automatically" readonly/>
@@ -28,7 +26,6 @@
           </small>
         </div>
 
-        <!-- Category -->
         <div class="form-group">
           <label>Category *</label>
           <select formControlName="blogCategory">
@@ -42,7 +39,6 @@
           </small>
         </div>
 
-        <!-- Short Description -->
         <div class="form-group">
           <label>Short Description *</label>
           <quill-editor
@@ -60,7 +56,6 @@
           </small>
         </div>
 
-        <!-- Blog Content -->
         <div class="form-group">
           <label>Blog Content *</label>
           <quill-editor
@@ -74,21 +69,32 @@
           </small>
         </div>
 
-        <!-- Featured Image -->
         <div class="form-group">
-          <label>Featured Image *</label>
-          <input type="file" (change)="onFileChange($event)" />
-          <small *ngIf="imageError"> Featured image is required </small>
+          <label>Featured Images (Max 3) *</label>
+          <input
+            type="file"
+            multiple
+            accept="image/*"
+            (change)="onFileChange($event)"
+          />
+          <small *ngIf="imageError" class="error">
+            Please upload 1 to 3 images only
+          </small>
         </div>
 
-        <!-- SEO Meta Title -->
-        <div class="form-group">
+        <div class="image-preview">
+          <div class="preview-item" *ngFor="let img of imagePreviews; let i = index">
+            <img [src]="img" />
+            <button type="button" (click)="removeImage(i)">✕</button>
+          </div>
+        </div>
+
+        <div class="form-group" *ngIf="userState.isAdmin()">
           <label>Meta Title</label>
           <input type="text" formControlName="metaTitle" placeholder="SEO meta title" />
         </div>
 
-        <!-- SEO Meta Description -->
-        <div class="form-group">
+        <div class="form-group" *ngIf="userState.isAdmin()">
           <label>Meta Description</label>
           <textarea
             rows="2"
@@ -97,8 +103,7 @@
           ></textarea>
         </div>
 
-        <!-- Status -->
-        <div class="form-group">
+        <div class="form-group" *ngIf="userState.isAdmin()">
           <label>Status *</label>
           <select formControlName="status">
             <option value="active">Active</option>
@@ -106,7 +111,6 @@
           </select>
         </div>
 
-        <!-- Submit -->
         <button type="submit" [disabled]="blogForm.invalid || imageError">{{ blogId ? "Update" : "Create" }} Blog</button>
       </form>
     </div>

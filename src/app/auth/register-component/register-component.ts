@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
-import { ApiService } from '../../services/api-service';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth-service';
+import { firstValueFrom } from 'rxjs';
+import { ToastService } from '../../services/toast-service';
 
 @Component({
   selector: 'app-register-component',
@@ -14,7 +15,13 @@ import { AuthService } from '../../services/auth-service';
 export class RegisterComponent {
   registerForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {}
+  constructor(
+    private fb: FormBuilder, 
+    private authService: AuthService,
+    private toastService: ToastService,
+    private route: ActivatedRoute,
+    private router: Router,
+  ) {}
 
   ngOnInit() {
     this.registerForm = this.fb.group(
@@ -37,19 +44,26 @@ export class RegisterComponent {
   }
 
   async onSubmit() {
-    try {
-      if (this.registerForm.valid) {
-        const formData = { ...this.registerForm.value }; 
-        delete formData.confirmPassword;
+    if (this.registerForm.valid) {
+      const formData = { ...this.registerForm.value }; 
+      delete formData.confirmPassword;
 
-        const response = await this.authService.register(formData).toPromise();
-        console.log('Registration successful, response:', response);
-      } else {
-        this.registerForm.markAllAsTouched();
+      try {
+        const response = await firstValueFrom(
+          this.authService.register(formData)
+        );
+
+        if(response.id) {
+          this.toastService.success('Congratulations! You have beacuse an author');
+        }
+        const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/author';
+        this.router.navigateByUrl(returnUrl);
+      } catch (error: any) {
+        const errorMessage = error?.error?.message || error?.message || 'Something goes wrong';
+        this.toastService.error(errorMessage);
       }
-    } catch (error) {
-      console.error('Error during registration:', error);
-      alert('An error occurred during registration. Please try again.');
+    } else {
+      this.registerForm.markAllAsTouched();
     }
   }
 }

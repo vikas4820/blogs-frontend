@@ -288,3 +288,31 @@ button.loading::after {
 }
 
 // form related css
+
+.image-preview {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.preview-item {
+  position: relative;
+}
+
+.preview-item img {
+  width: 120px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.preview-item button {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: red;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+}

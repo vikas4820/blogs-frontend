@@ -14,12 +14,152 @@
           </li>
         </ul>
       </div>
+      <!--
       <div class="col-12 mb-3">
         <div class="post-slider">
-          <!-- <img src="images/post/post-1.jpg" class="img-fluid" alt="post-thumb" /> -->
           <img [src]="blog?.image || 'images/default-image.png'" class="img-fluid" alt="post-thumb" />
         </div>
+
+        <div class="row mb-5">
+          <div class="col-12">
+            <div class="post-slider">
+              <div
+                id="blogLandingSlider"
+                class="carousel slide"
+                data-interval="4000"
+              >
+    
+                <ol class="carousel-indicators">
+                  <li data-target="#blogLandingSlider" data-slide-to="0" class="active"></li>
+                  <li data-target="#blogLandingSlider" data-slide-to="1"></li>
+                  <li data-target="#blogLandingSlider" data-slide-to="2"></li>
+                  <li data-target="#blogLandingSlider" data-slide-to="3"></li>
+                </ol>
+    
+                <div class="carousel-inner">
+    
+                  <div class="carousel-item active">
+                    <img src="images/slider/slide-1.jpeg" class="d-block w-100 img-fluid" alt="reading">
+                    <div
+                      class="carousel-caption d-none d-md-block"
+                      data-aos="fade-up"
+                      data-aos-duration="1000"
+                    >
+                      <h1 class="mb-3">Where Stories Come Alive</h1>
+                      <p class="lead">
+                        Read thoughtful blogs and explore ideas from passionate creators.
+                      </p>
+                      <a routerLink="/blogs" class="btn btn-primary mt-3">
+                        Start Reading
+                      </a>
+                    </div>
+                  </div>
+    
+                  <div class="carousel-item">
+                    <img src="images/slider/slide-2.webp" class="d-block w-100 img-fluid" alt="writing">
+                    <div
+                      class="carousel-caption d-none d-md-block"
+                      data-aos="fade-up"
+                      data-aos-duration="1000"
+                    >
+                      <h1 class="mb-3">Write. Share. Inspire.</h1>
+                      <p class="lead">
+                        Turn your thoughts into stories and reach a global audience.
+                      </p>
+                      <a
+                        routerLink="/user/blogs/create"
+                        class="btn btn-outline-light mt-3"
+                      >
+                        Write a Blog
+                      </a>
+                    </div>
+                  </div>
+    
+                  <div class="carousel-item">
+                    <img src="images/slider/slide-3.jpg" class="d-block w-100 img-fluid" alt="community">
+                    <div
+                      class="carousel-caption d-none d-md-block"
+                      data-aos="fade-up"
+                      data-aos-duration="1000"
+                    >
+                      <h1 class="mb-3">A Community Built on Ideas</h1>
+                      <p class="lead">
+                        Connect with readers and writers who value meaningful content.
+                      </p>
+                      <a routerLink="/auth/signup" class="btn btn-primary mt-3">
+                        Join the Community
+                      </a>
+                    </div>
+                  </div>
+    
+                  <div class="carousel-item">
+                    <img src="images/slider/slide-4.jpg" class="d-block w-100 img-fluid" alt="community">
+                    <div
+                      class="carousel-caption d-none d-md-block"
+                      data-aos="fade-up"
+                      data-aos-duration="1000"
+                    >
+                      <h1 class="mb-3">A Community Built on Ideas</h1>
+                      <p class="lead">
+                        Connect with readers and writers who value meaningful content.
+                      </p>
+                      <a routerLink="/auth/signup" class="btn btn-primary mt-3">
+                        Join the Community
+                      </a>
+                    </div>
+                  </div>
+    
+                </div>
+    
+                <a class="carousel-control-prev" href="#blogLandingSlider" role="button" data-slide="prev">
+                  <span class="carousel-control-prev-icon"></span>
+                </a>
+                <a class="carousel-control-next" href="#blogLandingSlider" role="button" data-slide="next">
+                  <span class="carousel-control-next-icon"></span>
+                </a>
+    
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+      -->
+
+      <div class="col-12 mb-3">
+        <div class="post-slider">
+          <!-- Single Image -->
+          <ng-container *ngIf="blogImages.length === 1">
+            <img [src]="blogImages[0]" class="img-fluid" alt="post-thumb" />
+          </ng-container>
+      
+          <!-- Carousel for 2 or more images -->
+          <ng-container *ngIf="blogImages.length > 1">
+            <div id="blogSlider" class="carousel slide" data-ride="carousel">
+              <ol class="carousel-indicators">
+                <li *ngFor="let img of blogImages; let i = index"
+                    [class.active]="i === 0"
+                    data-target="#blogSlider"
+                    [attr.data-slide-to]="i">
+                </li>
+              </ol>
+      
+              <div class="carousel-inner">
+                <div *ngFor="let img of blogImages; let i = index" class="carousel-item" [class.active]="i === 0">
+                  <img [src]="img" class="d-block w-100 img-fluid" alt="post-image">
+                </div>
+              </div>
+      
+              <a class="carousel-control-prev" href="#blogSlider" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+              </a>
+              <a class="carousel-control-next" href="#blogSlider" role="button" data-slide="next">
+                <span class="carousel-control-next-icon"></span>
+              </a>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      
       <div class="col-lg-10 mx-auto">
         <div class="content">
           <!-- <p>{{ blog?.content }}</p> -->

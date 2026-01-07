@@ -27,7 +27,7 @@
         <article class="row mb-5" *ngFor="let blog of blogs">
           <div class="col-12">
             <div class="post-slider">
-              <img [src]="blog?.image || 'images/default-image.png'" class="img-fluid" alt="post-thumb" />
+              <img [src]="getBlogImage(blog)" class="img-fluid" alt="post-thumb" />
             </div>
           </div>
           <div class="col-lg-10 mx-auto">

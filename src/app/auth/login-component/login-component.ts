@@ -5,6 +5,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth-service';
 import { UserState } from '../../states/user-state.service';
 import { ToastService } from '../../services/toast-service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-login-component',
@@ -46,7 +47,9 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       try {
         this.disabledBtn= true;
-        const response = await this.authService.login(this.loginForm.value).toPromise();
+        const response = await firstValueFrom(
+          this.authService.login(this.loginForm.value)
+        );
         if(response && response.access_token) {
           localStorage.setItem('access_token', response.access_token);
           this.authService.initializeFromToken();

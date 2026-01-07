@@ -67,10 +67,23 @@ export class BlogsComponent {
   }
 
   async deleteBlog(id: number) {
+
+    if (!confirm('Are you sure you want to delete this blog?')) return;
+
     try {
-      
-    } catch (error) {
-      
+      const result = await firstValueFrom(
+        this.blogService.deleteBlog(id)
+      );
+      if(result.success) {
+        await this.loadBlogs();
+        this.toastService.success("Blog Deleted Successfully");
+        this.cdr.detectChanges();
+      } else {
+        this.toastService.warning('Blog not deleted');
+      }
+    } catch (error: any) {
+      const errorMessage = error?.error?.message || error?.message || 'Something goes wrong';
+      this.toastService.warning(errorMessage);
     }
   }
 
@@ -82,5 +95,7 @@ export class BlogsComponent {
       queryParamsHandling: 'merge'
     });
   }
+
+
   
 }
