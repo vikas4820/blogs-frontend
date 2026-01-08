@@ -3,6 +3,7 @@ import { NavbarComponent } from '../../shared/backend/navbar-component/navbar-co
 import { SidebarComponent } from '../../shared/backend/sidebar-component/sidebar-component';
 import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { SharedService } from '../../services/shared-service';
 
 @Component({
   selector: 'app-backend-component',
@@ -17,15 +18,16 @@ import { CommonModule } from '@angular/common';
 })
 export class BackendComponent {
 
-  isCollapsed = false;
-  isSidebarOpen = false;
+  isSidebarHidden = false;
 
-  toggleSidebar() {
-    if (window.innerWidth <= 768) {
-      this.isSidebarOpen = !this.isSidebarOpen;
-    } else {
-      this.isCollapsed = !this.isCollapsed;
-    }
+  constructor(
+    private sharedService: SharedService,
+  ) {}
+
+  ngOnInit(): void {
+    this.sharedService.sidebarVisibility$.subscribe((visible) => {
+      this.isSidebarHidden = !visible;
+    });
   }
 
 }

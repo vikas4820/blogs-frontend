@@ -1,17 +1,13 @@
 import { signal, computed, Injectable } from '@angular/core';
 
 export interface Role {
-  id: number;
   name: string;
-  createdAt: string;
-  updatedAt: string;
-  deletedAt: string | null;
 }
 
 export interface TokenPayload {
   username: string;
   sub: number;    
-  role: Role;
+  roles: any[];
   iat: number;
   exp: number;
 }
@@ -26,18 +22,20 @@ export class UserState {
   private _role = signal<Role | null>(null);
 
   // selectors
-  user = computed(() => this._user());
+  user = computed(() => this._user());  
   role = computed(() => this._role());
 
   isLoggedIn = computed(() => !!this._user());
   roleName = computed(() => this._role()?.name ?? null);
-
   isAdmin = computed(() => this._role()?.name === 'admin');
 
-  // actions
   setFromToken(payload: TokenPayload) {
     this._user.set(payload);
-    this._role.set(payload.role);
+    this._role.set(
+      payload.roles?.length
+        ? { name: payload.roles[0]?.name }
+        : null
+    );
   }
 
   clear() {

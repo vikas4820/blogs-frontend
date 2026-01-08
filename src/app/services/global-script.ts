@@ -8,7 +8,6 @@ import { filter } from 'rxjs/operators';
 export class GlobalScript {
 
   constructor(private router: Router) {
-    // Subscribe to router events
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd) 
     ).subscribe(() => {
@@ -24,13 +23,10 @@ export class GlobalScript {
         preloader.style.display = 'none'; 
       }
   
-      // Search Form Open logic
       const searchOpen = document.getElementById('searchOpen');
       const searchClose = document.getElementById('searchClose');
       const searchWrapper = document.querySelector('.search-wrapper') as HTMLElement;
       const searchBox = document.querySelector('.search-box') as HTMLElement;
-  
-      console.log("searchOpen", searchOpen);
   
       if (searchOpen) {
         searchOpen.addEventListener('click', () => {

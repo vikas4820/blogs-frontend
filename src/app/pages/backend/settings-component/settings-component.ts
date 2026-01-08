@@ -163,7 +163,6 @@ async submitSlider() {
         }
       }
 
-      console.log('Testimonial saved successfully');
     } catch (error) {
       console.error('Error saving testimonial', error);
     }

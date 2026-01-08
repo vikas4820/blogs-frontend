@@ -24,7 +24,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   }
 
   const decoded: any = jwtHelper.decodeToken(token);
-  const userRole = decoded?.role?.name;
+  const userRole = decoded?.roles[0].name;
 
   const allowedRoles: string[] = route.data['roles'] ?? [];
   if (allowedRoles.length && !allowedRoles.includes(userRole)) {

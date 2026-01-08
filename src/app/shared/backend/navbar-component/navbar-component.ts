@@ -29,9 +29,6 @@ export class NavbarComponent {
     this.user = this.userState.user;
     this.roleName = this.userState.roleName;
     this.isAdmin = this.userState.isAdmin;
-    console.log("this.user", this.user())
-    console.log("this.roleName", this.roleName())
-    console.log("this.isAdmin", this.isAdmin())
   }
 
   toggleSidebar() {

@@ -50,7 +50,6 @@ export class BlogComponent {
     try {
       this.blog = await this.blogService.getOne(String(this.blogId)).toPromise();
       this.safeContent = this.sanitizer.bypassSecurityTrustHtml(this.blog.content);
-      console.log("this.blog", this.blog)
     } catch (error) {
       
     }
@@ -63,6 +62,6 @@ export class BlogComponent {
       return this.blog.images.map((img: any) => this.baseBackEndUrl + '/uploads/blogs/' + img);
     }
     // fallback default image
-    return ['assets/images/default-image.png'];
+    return ['images/default-image.png'];
   }
 }

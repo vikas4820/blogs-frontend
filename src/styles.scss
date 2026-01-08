@@ -183,6 +183,10 @@ body {
   width: calc(100% - 60px);
   left: 60px;
 }
+.adjust-width-toggle-sidebar {
+  width: calc(100% - 60px) !important;
+  left: 60px !important;
+}
 
 /* NAVBAR */
 #content nav {

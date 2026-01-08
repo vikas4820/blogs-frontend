@@ -57,7 +57,6 @@ export class HomeComponent implements AfterViewInit {
     try {
       const blogs = await this.blogService.findAll().toPromise();
       this.blogs = blogs ?? [];
-      console.log("this.blogs", this.blogs)
     } catch (error) {
       
     } finally {
@@ -70,7 +69,6 @@ export class HomeComponent implements AfterViewInit {
       this.sliderData = await firstValueFrom(
         this.blogSliderService.findAll()
       )
-      console.log("sliderData", this.sliderData)
     } catch (error) {
       
     } finally {

@@ -82,7 +82,7 @@
           </small>
         </div>
 
-        <div class="image-preview">
+        <div class="image-preview mb-3">
           <div class="preview-item" *ngFor="let img of imagePreviews; let i = index">
             <img [src]="img" />
             <button type="button" (click)="removeImage(i)">✕</button>

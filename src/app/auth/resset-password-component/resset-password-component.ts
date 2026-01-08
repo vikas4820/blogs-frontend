@@ -76,7 +76,6 @@ export class RessetPasswordComponent {
         this.authService.resetPassword(this.token, password)
       );
 
-      console.log('result', result);
       this.toastService.success('Password reset successfully');
 
     } catch (error: any) {

@@ -5,6 +5,7 @@ import { LoaderService } from '../../../services/loader-service';
 import { BlogsService } from '../../../services/blogs-service';
 import { ToastService } from '../../../services/toast-service';
 import { firstValueFrom } from 'rxjs';
+import { UserState } from '../../../states/user-state.service';
 
 @Component({
   selector: 'app-blogs-component',
@@ -29,6 +30,7 @@ export class BlogsComponent {
     private toastService: ToastService,
     private route: ActivatedRoute,
     private router: Router,
+    public userState: UserState,
   ) {}
 
   async ngOnInit() {

@@ -22,6 +22,12 @@ export class BlogsService extends ApiService {
     );
   }
 
+  findAllPublicBlogs(page = 1, limit = 5) {
+    return this.apiService.get<any>(
+      `${this.blogUrl}/public-blogs/?page=${page}&limit=${limit}`
+    );
+  }
+
 
   getCount(): Observable<{ all: number, active: number, inactive: number }> {
     return this.apiService.get<{ all: number, active: number, inactive: number }>(`${this.blogUrl}/count`);

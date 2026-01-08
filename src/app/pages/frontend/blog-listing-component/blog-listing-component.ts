@@ -48,7 +48,7 @@ export class BlogListingComponent implements OnInit {
     try {
       this.loader.show();
       const blogs = await firstValueFrom(
-        this.blogService.findAllWithPagination(page)
+        this.blogService.findAllPublicBlogs(page)
       );
       this.blogs = blogs?.data ?? [];
       this.currentPage = blogs.meta.page;
@@ -65,11 +65,7 @@ export class BlogListingComponent implements OnInit {
   }
 
   changePage(page: number) {
-    console.log("page", page)
-    console.log("this.totalPages", this.totalPages)
     if (page < 1 || page > this.totalPages) return;
-
-    console.log("this.totalPages", this.totalPages)
     this.router.navigate([], {
       queryParams: { page },
       queryParamsHandling: 'merge'

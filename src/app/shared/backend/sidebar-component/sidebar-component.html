@@ -1,84 +1,64 @@
-<!-- <div id="sidebar" [ngClass]="{'hide': isSidebarHidden}">
-  <a href="#" class="brand">
-    <i class='bx bxs-smile bx-lg'></i>
-    <span class="text">AdminHub</span>
+<section id="sidebar" [ngClass]="{ hide: isSidebarHidden }">
+  <a [routerLink]="['/user']" class="brand">
+    <i class="bx bxs-pencil bx-lg"></i>
+    <span class="text">ThinkHub</span>
   </a>
   <ul class="side-menu top">
-    <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+    <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{ exact: true }">
       <a href="#" [routerLink]="['/user']">
-        <i class="ti ti-dashboard bx-sm"></i>
+        <i class="bx bxs-dashboard bx-sm"></i>
         <span class="text">Dashboard</span>
       </a>
     </li>
-    <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+    <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{ exact: true }">
       <a href="#" [routerLink]="['/user/blogs']">
-        <i class="ti ti-blog bx-sm"></i>
+        <i class="bx bxs-doughnut-chart bx-sm"></i>
         <span class="text">Blogs</span>
+      </a>
+    </li>
+    <li
+      [routerLinkActive]="['active']"
+      [routerLinkActiveOptions]="{ exact: true }"
+      *ngIf="userState.isAdmin()"
+    >
+      <a href="#" [routerLink]="['/user/blogs-category']">
+        <i class="bx bxs-message-dots bx-sm"></i>
+        <span class="text">Blogs Category</span>
+      </a>
+    </li>
+    <li
+      [routerLinkActive]="['active']"
+      [routerLinkActiveOptions]="{ exact: true }"
+      *ngIf="userState.isAdmin()"
+    >
+      <a href="#" [routerLink]="['/user/all-users']">
+        <i class="bx bxs-group bx-sm"></i>
+        <span class="text">Users</span>
+      </a>
+    </li>
+    <li
+      [routerLinkActive]="['active']"
+      [routerLinkActiveOptions]="{ exact: true }"
+      *ngIf="userState.isAdmin()"
+    >
+      <a href="#" [routerLink]="['/user/settings']">
+        <i class="bx bxs-cog bx-sm"></i>
+        <span class="text">Settings</span>
       </a>
     </li>
   </ul>
   <ul class="side-menu bottom">
     <li>
-      <a href="#" class="logout">
-        <i class='bx bx-power-off bx-sm bx-burst-hover'></i>
+      <a [routerLink]="['/user/profile']">
+        <i class="bx bxs-user bx-sm"></i>
+        <span class="text">Profile</span>
+      </a>
+    </li>
+    <li>
+      <a (click)="logOut()" class="logout">
+        <i class="bx bx-power-off bx-sm bx-burst-hover"></i>
         <span class="text">Logout</span>
       </a>
     </li>
   </ul>
-</div> -->
-
- 
-	<section id="sidebar" [ngClass]="{'hide': isSidebarHidden}">
-		<a [routerLink]="['/user']" class="brand">
-			<i class='bx bxs-smile  bx-lg'></i>
-			<span class="text">AdminHub</span>
-		</a>
-		<ul class="side-menu top">
-			<li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
-				<a href="#" [routerLink]="['/user']">
-					<i class='bx bxs-dashboard bx-sm' ></i>
-					<span class="text">Dashboard</span>
-				</a>
-			</li>
-			<li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
-				<a href="#" [routerLink]="['/user/blogs']">
-					<i class='bx bxs-doughnut-chart bx-sm' ></i>
-					<span class="text">Blogs</span>
-				</a>
-			</li>
-			<li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" *ngIf="userState.isAdmin()">
-				<a href="#" [routerLink]="['/user/blogs-category']">
-					<i class='bx bxs-message-dots bx-sm' ></i>
-					<span class="text">Blogs Category</span>
-				</a>
-			</li>
-			<li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" *ngIf="userState.isAdmin()">
-				<a href="#" [routerLink]="['/user/all-users']">
-					<i class='bx bxs-group bx-sm' ></i>
-					<span class="text">Users</span>
-				</a>
-			</li>
-			<li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}" *ngIf="userState.isAdmin()">
-				<a href="#" [routerLink]="['/user/settings']">
-					<i class='bx bxs-cog bx-sm' ></i>
-					<span class="text">Settings</span>
-				</a>
-			</li>
-		</ul>
-		<ul class="side-menu bottom">
-			<li>
-				
-			<a [routerLink]="['/user/profile']">
-				<i class='bx bxs-user bx-sm' ></i>
-				<span class="text">Profile</span>
-			</a> 
-				
-			</li>
-			<li>
-				<a (click)="logOut()" class="logout">
-					<i class='bx bx-power-off bx-sm bx-burst-hover' ></i>
-					<span class="text">Logout</span>
-				</a>
-			</li>
-		</ul>
-	</section>
+</section>

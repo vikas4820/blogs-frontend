@@ -80,7 +80,6 @@ export class BlogsFormComponent {
 
   async ngOnInit() {
     try {
-      console.log(this.userState.user()?.sub);
       this.loader.show();
       await this.fetchCategories();
       const blogId = this.route.snapshot.paramMap.get('id');

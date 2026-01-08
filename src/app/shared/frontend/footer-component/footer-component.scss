@@ -1,0 +1,18 @@
+/* Footer logo icon + text alignment */
+a.mb-4.d-block {
+  display: flex; /* Align icon and text horizontally */
+  align-items: center; /* Vertically center icon and text */
+}
+
+a.mb-4.d-block i.ti-pencil {
+  font-size: 1.5rem; /* Adjust icon size similar to image height */
+  color: #ce8460; /* Optional: match text color */
+}
+
+a.mb-4.d-block span {
+  margin-left: 0.5rem; /* Space between icon and text */
+  font-size: 1.25rem; /* Adjust font size to match previous look */
+  font-weight: 600; /* Slightly bold like a logo text */
+  line-height: 1; /* Ensure proper vertical alignment */
+  color: #333 !important;
+}
